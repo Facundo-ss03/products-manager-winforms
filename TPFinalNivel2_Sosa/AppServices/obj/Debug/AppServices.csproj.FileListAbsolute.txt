@@ -1,0 +1,6 @@
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppServices.dll
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppServices.pdb
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.csproj.AssemblyReference.cache
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.csproj.CoreCompileInputs.cache
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.dll
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.pdb

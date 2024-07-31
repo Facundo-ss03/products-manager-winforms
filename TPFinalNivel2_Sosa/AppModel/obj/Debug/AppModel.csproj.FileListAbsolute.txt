@@ -1,0 +1,9 @@
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppModel\bin\Debug\AppModel.dll
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppModel\bin\Debug\AppModel.pdb
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppModel\bin\Debug\AppServices.dll
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppModel\bin\Debug\AppServices.pdb
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppModel\obj\Debug\AppModel.csproj.AssemblyReference.cache
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppModel\obj\Debug\AppModel.csproj.CoreCompileInputs.cache
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppModel\obj\Debug\AppModel.csproj.Up2Date
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppModel\obj\Debug\AppModel.dll
+C:\Users\Facundo\Desktop\C-nivel-2-Tp-final\TPFinalNivel2_Sosa\AppModel\obj\Debug\AppModel.pdb
