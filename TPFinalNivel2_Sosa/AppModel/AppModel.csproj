@@ -54,6 +54,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Articulos.cs" />
     <Compile Include="ManejoDeConsultas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

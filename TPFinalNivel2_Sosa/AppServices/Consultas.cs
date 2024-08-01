@@ -20,18 +20,17 @@ namespace AppServices
 
         SqlConnection conexion;
 
-        public DataTable consultarListaArticulos()
+        public DataTable consultarTablaArticulos()
         {
             try
             {
-
                 conexion.Open();
 
-                SqlDataAdapter adapter = new SqlDataAdapter("select A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria \r\nfrom ARTICULOS A, MARCAS M, CATEGORIAS C\r\nwhere M.Id = IdMarca And C.Id = A.IdCategoria", conexion);
+                SqlDataAdapter adapter = new SqlDataAdapter("select A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio \r\nfrom ARTICULOS A, MARCAS M, CATEGORIAS C\r\nwhere M.Id = IdMarca AND C.Id = IdCategoria\r\n", conexion);
                 DataTable dt = new DataTable();
-
+                
                 adapter.Fill(dt);
-
+                
                 return dt;
 
             }

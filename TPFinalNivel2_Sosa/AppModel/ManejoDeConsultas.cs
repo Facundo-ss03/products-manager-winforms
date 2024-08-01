@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Net.PeerToPeer.Collaboration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,9 +21,56 @@ namespace AppModel
 
         Consultas consulta;
 
-        public void cargarDataGrid(DataGridView dgv)
+        public void cargarDataGrid(DataGridView dgv, string criterio, string busqueda)
         {
-            dgv.DataSource = consulta.consultarListaArticulos();
+            List<Articulos> articulos = crearListaArticulos();
+
+            if(criterio == "Todos")
+            {
+                dgv.DataSource = articulos;
+            }
+            if (criterio == "Codigo")
+            {
+                dgv.DataSource = articulos.FindAll(x => x.codigo.ToUpper().Contains(busqueda));
+            }
+            if (criterio == "Nombre")
+            {
+                dgv.DataSource = articulos.FindAll(x => x.nombre.ToUpper().Contains(busqueda));
+            }
+            if (criterio == "Descripcion")
+            {
+                dgv.DataSource = articulos.FindAll(x => x.descripcion.ToUpper().Contains(busqueda));
+            }
+            if (criterio == "Marca")
+            {
+                dgv.DataSource = articulos.FindAll(x => x.marca.ToUpper().Contains(busqueda));
+            }
+            if (criterio == "Categoria")
+            {
+                dgv.DataSource = articulos.FindAll(x => x.categoria.ToUpper().Contains(busqueda));
+            }
+            if (criterio == "Precio")
+            {
+                dgv.DataSource = articulos.FindAll(x => x.precio.ToString().Contains(busqueda));
+            }
+        }
+
+
+        public List<Articulos> crearListaArticulos()
+        {
+            List<Articulos> articulos = new List<Articulos>();
+            DataTable dt = consulta.consultarTablaArticulos();
+
+            foreach (DataRow columna in dt.Rows)
+            {
+                articulos.Add(new Articulos(columna["Codigo"].ToString(), columna["Nombre"].ToString(), 
+                    
+                    columna["Descripcion"].ToString(), columna["Marca"].ToString(), 
+                    
+                    columna["Categoria"].ToString(), SqlMoney.Parse(columna["Precio"].ToString())));
+            }
+
+            return articulos;
         }
 
         public void cargarSelector(ComboBox cmb, string comando)
@@ -48,7 +97,7 @@ namespace AppModel
 
         public void obtenerColumnas(ComboBox cmb)
         {
-            DataTable tabla = consulta.consultarListaArticulos();
+            DataTable tabla = consulta.consultarTablaArticulos();
 
             foreach (DataColumn item in tabla.Columns)
             {

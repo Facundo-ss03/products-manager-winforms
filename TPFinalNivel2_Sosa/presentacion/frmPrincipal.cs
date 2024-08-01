@@ -41,14 +41,7 @@ namespace presentacion
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (cmbCriterioDeBusqueda.SelectedIndex == 0)
-            {
-                controller.cargarDataGrid(dataGridView1);
-            }
-            else
-            {
-                dataGridView1.DataSource = null;
-            }
+            controller.cargarDataGrid(dataGridView1, cmbCriterioDeBusqueda.Text, txtBusqueda.Text.ToUpper());
         }
     }
 }
