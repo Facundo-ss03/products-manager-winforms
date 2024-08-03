@@ -55,6 +55,11 @@ namespace AppModel
             }
         }
 
+        public void actualizarDataGrid(DataGridView dgv)
+        {
+            dgv.DataSource = crearListaArticulos();
+        }
+
 
         public List<Articulos> crearListaArticulos()
         {
@@ -65,9 +70,9 @@ namespace AppModel
             {
                 articulos.Add(new Articulos(columna["Codigo"].ToString(), columna["Nombre"].ToString(), 
                     
-                    columna["Descripcion"].ToString(), columna["Marca"].ToString(), 
+                    columna["Descripcion"].ToString(), (string)columna["Marca"], 
                     
-                    columna["Categoria"].ToString(), SqlMoney.Parse(columna["Precio"].ToString())));
+                    (string)columna["Categoria"], (string)columna["ImagenUrl"], SqlMoney.Parse(columna["Precio"].ToString())));
             }
 
             return articulos;
@@ -80,9 +85,14 @@ namespace AppModel
             {
                 comando = "select * from MARCAS";
             }
-            else
+            if (comando == "CATEGORIAS")
             {
-                comando = "select* from CATEGORIAS";
+                comando = "select * from CATEGORIAS";
+            }
+            if( comando == "CRITERIOS")
+            {
+                obtenerColumnas(cmb);
+                return;
             }
 
             DataTable tabla = consulta.consultarTablas(comando);
@@ -91,7 +101,6 @@ namespace AppModel
             {
                 string item = Convert.ToString(categoria["Descripcion"]);
                 cmb.Items.Add(item);
-               
             }
         }
 
@@ -101,13 +110,32 @@ namespace AppModel
 
             foreach (DataColumn item in tabla.Columns)
             {
-                cmb.Items.Add(item.ColumnName);
+                if(item.ColumnName != "ImagenUrl")
+                {
+                    cmb.Items.Add(item.ColumnName);
+                }
             }
         }
 
-        public void agregar(string codigo, string Nombre, string descripcion, string marca, string categoria, string url, int precio)
+        public void agregar(Articulos nuevo)
         {
-            consulta.agregarArticulo(codigo, Nombre, descripcion, marca, categoria, url, precio);
+            consulta.agregarArticulo(nuevo.codigo, nuevo.nombre, nuevo.descripcion, nuevo.getIdMarca(), nuevo.getIdCategoria(), nuevo.getImagenUrl(), nuevo.precio);
+        }
+
+        public int obtenerId(string descripcion, string nombreTabla)
+        {
+            DataTable tabla = consulta.consultarTablas("Select * From " + nombreTabla + "");
+            int id = 0;
+
+            foreach (DataRow row in tabla.Rows)
+            {
+                if(descripcion == (string)row["Descripcion"])
+                {
+                    id = (int)row["Id"];
+                }
+            }
+
+            return id;
         }
     }
 }

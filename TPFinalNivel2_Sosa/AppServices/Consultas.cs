@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Security.Policy;
+using System.Data.SqlTypes;
 
 namespace AppServices
 {
@@ -25,8 +26,8 @@ namespace AppServices
             try
             {
                 conexion.Open();
-
-                SqlDataAdapter adapter = new SqlDataAdapter("select A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio \r\nfrom ARTICULOS A, MARCAS M, CATEGORIAS C\r\nwhere M.Id = IdMarca AND C.Id = IdCategoria\r\n", conexion);
+                
+                SqlDataAdapter adapter = new SqlDataAdapter("select A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.ImagenUrl, A.Precio from ARTICULOS A, MARCAS M, CATEGORIAS C where M.Id = IdMarca AND C.Id = IdCategoria", conexion);
                 DataTable dt = new DataTable();
                 
                 adapter.Fill(dt);
@@ -94,28 +95,38 @@ namespace AppServices
             }
         }
 
-        public void agregarArticulo(string codigo, string Nombre, string descripcion, string marca, string categoria, string url, int precio)
+        public void agregarArticulo(string codigo, string nombre, string descripcion, int marca, int categoria, string url, SqlMoney precio)
         {
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandText = "INSERT INTO ARTICULOS (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) VALUES (@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @ImagenUrl, @Precio)";
+            cmd.Parameters.AddWithValue("@Codigo", codigo);
+            cmd.Parameters.AddWithValue("@Nombre", nombre);
+            cmd.Parameters.AddWithValue("@Descripcion", descripcion);
+            cmd.Parameters.AddWithValue("@IdMarca", marca);
+            cmd.Parameters.AddWithValue("@IdCategoria", categoria);
+            cmd.Parameters.AddWithValue("@ImagenUrl", url);
+            cmd.Parameters.AddWithValue("@Precio", precio);
+            cmd.Connection = conexion;
+
             try
             {
 
                 conexion.Open();
+                cmd.ExecuteNonQuery();
 
-                SqlDataAdapter adapter = new SqlDataAdapter("insert into ARTICULOS (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) values (" + codigo + ", " + Nombre + ", " + descripcion + ", " + marca + ", " + categoria + ", " + url + ", " + precio.ToString(), conexion);
-                
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
             {
-
-            conexion.Close();
+                conexion.Close();
             }
-
         }
+
 
         /*
         public void consultarColumnas()

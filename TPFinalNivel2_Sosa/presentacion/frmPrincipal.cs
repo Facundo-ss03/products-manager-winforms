@@ -23,25 +23,24 @@ namespace presentacion
 
             this.controller = new ManejoDeConsultas();
 
-            controller.obtenerColumnas(cmbCriterioDeBusqueda);
-            controller.cargarSelector(cmbMarcas, "MARCAS");
-            controller.cargarSelector(cmbCategorias, "CATEGORIAS");
+            controller.cargarSelector(cmbCriterioDeBusqueda, "CRITERIOS");
         }
 
         ManejoDeConsultas controller;
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            controller.agregar(txtCodigo.Text, txtTitulo.Text, txtDescripcion.Text, cmbMarcas.SelectedValue.ToString(), cmbCategorias.SelectedValue.ToString(), txtUrlImagen.Text, Convert.ToInt32(nudCantidad.Value));
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             controller.cargarDataGrid(dataGridView1, cmbCriterioDeBusqueda.Text, txtBusqueda.Text.ToUpper());
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            frmArtículos articulos = new frmArtículos();
+            articulos.ShowDialog();
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
         }
     }
 }
