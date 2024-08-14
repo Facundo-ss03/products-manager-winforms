@@ -30,3 +30,7 @@ C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\presentacion\obj\Debug\p
 C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\presentacion\obj\Debug\presenta.D2D8CCE5.Up2Date
 C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\presentacion\obj\Debug\presentacion.exe
 C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\presentacion\obj\Debug\presentacion.pdb
+C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\presentacion\bin\Debug\AppController.dll
+C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\presentacion\bin\Debug\AppController.pdb
+C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\presentacion\bin\Debug\AppController.dll.config
+C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\presentacion\obj\Debug\presentacion.frmDetalles.resources

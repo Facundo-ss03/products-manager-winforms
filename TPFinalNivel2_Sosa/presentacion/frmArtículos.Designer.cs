@@ -40,12 +40,13 @@
             this.cmbMarcas = new System.Windows.Forms.ComboBox();
             this.lblPrecio = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
-            this.btnAgregar = new System.Windows.Forms.Button();
+            this.btnAceptar = new System.Windows.Forms.Button();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.btnLimpiar = new System.Windows.Forms.Button();
-            this.pbImagen = new System.Windows.Forms.PictureBox();
             this.txtPrecio = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
+            this.btnCancelar = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblDescripcion
@@ -64,7 +65,7 @@
             this.txtDescripcion.Margin = new System.Windows.Forms.Padding(13, 3, 13, 22);
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(180, 20);
-            this.txtDescripcion.TabIndex = 20;
+            this.txtDescripcion.TabIndex = 3;
             // 
             // lblUrlImagen
             // 
@@ -82,7 +83,8 @@
             this.txtUrlImagen.Margin = new System.Windows.Forms.Padding(13, 3, 13, 22);
             this.txtUrlImagen.Name = "txtUrlImagen";
             this.txtUrlImagen.Size = new System.Drawing.Size(180, 20);
-            this.txtUrlImagen.TabIndex = 18;
+            this.txtUrlImagen.TabIndex = 5;
+            this.txtUrlImagen.Leave += new System.EventHandler(this.txtUrlImagen_Leave);
             // 
             // lblCodigo
             // 
@@ -100,7 +102,7 @@
             this.txtCodigo.Margin = new System.Windows.Forms.Padding(13, 3, 13, 22);
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(180, 20);
-            this.txtCodigo.TabIndex = 5;
+            this.txtCodigo.TabIndex = 1;
             // 
             // lblCategorias
             // 
@@ -120,7 +122,7 @@
             this.cmbCategorias.Margin = new System.Windows.Forms.Padding(10, 5, 10, 20);
             this.cmbCategorias.Name = "cmbCategorias";
             this.cmbCategorias.Size = new System.Drawing.Size(180, 21);
-            this.cmbCategorias.TabIndex = 12;
+            this.cmbCategorias.TabIndex = 7;
             // 
             // lblMarca
             // 
@@ -140,7 +142,7 @@
             this.cmbMarcas.Margin = new System.Windows.Forms.Padding(10, 5, 10, 20);
             this.cmbMarcas.Name = "cmbMarcas";
             this.cmbMarcas.Size = new System.Drawing.Size(180, 21);
-            this.cmbMarcas.TabIndex = 4;
+            this.cmbMarcas.TabIndex = 6;
             // 
             // lblPrecio
             // 
@@ -162,16 +164,16 @@
             this.lblNombre.TabIndex = 4;
             this.lblNombre.Text = "Nombre:";
             // 
-            // btnAgregar
+            // btnAceptar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(40, 451);
-            this.btnAgregar.Margin = new System.Windows.Forms.Padding(10, 15, 10, 10);
-            this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(180, 37);
-            this.btnAgregar.TabIndex = 0;
-            this.btnAgregar.Text = "Agregar";
-            this.btnAgregar.UseVisualStyleBackColor = true;
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            this.btnAceptar.Location = new System.Drawing.Point(240, 448);
+            this.btnAceptar.Margin = new System.Windows.Forms.Padding(10, 15, 10, 10);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(180, 37);
+            this.btnAceptar.TabIndex = 9;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // txtNombre
             // 
@@ -179,25 +181,18 @@
             this.txtNombre.Margin = new System.Windows.Forms.Padding(13, 3, 13, 22);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(180, 20);
-            this.txtNombre.TabIndex = 3;
+            this.txtNombre.TabIndex = 2;
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(40, 501);
+            this.btnLimpiar.Location = new System.Drawing.Point(40, 448);
             this.btnLimpiar.Margin = new System.Windows.Forms.Padding(10, 3, 10, 10);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(180, 37);
-            this.btnLimpiar.TabIndex = 17;
+            this.btnLimpiar.TabIndex = 8;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
-            // 
-            // pbImagen
-            // 
-            this.pbImagen.Location = new System.Drawing.Point(295, 21);
-            this.pbImagen.Name = "pbImagen";
-            this.pbImagen.Size = new System.Drawing.Size(300, 300);
-            this.pbImagen.TabIndex = 22;
-            this.pbImagen.TabStop = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // txtPrecio
             // 
@@ -205,18 +200,40 @@
             this.txtPrecio.Margin = new System.Windows.Forms.Padding(13, 3, 13, 22);
             this.txtPrecio.Name = "txtPrecio";
             this.txtPrecio.Size = new System.Drawing.Size(180, 20);
-            this.txtPrecio.TabIndex = 23;
+            this.txtPrecio.TabIndex = 4;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(440, 448);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(10, 15, 10, 10);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(180, 37);
+            this.btnCancelar.TabIndex = 10;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.pictureBox1.Location = new System.Drawing.Point(318, 21);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(300, 300);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 25;
+            this.pictureBox1.TabStop = false;
             // 
             // frmArtículos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 561);
+            this.ClientSize = new System.Drawing.Size(661, 505);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.txtPrecio);
-            this.Controls.Add(this.pbImagen);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.lblDescripcion);
-            this.Controls.Add(this.btnAgregar);
+            this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.lblCategorias);
             this.Controls.Add(this.cmbCategorias);
             this.Controls.Add(this.txtDescripcion);
@@ -232,7 +249,8 @@
             this.Name = "frmArtículos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
-            ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).EndInit();
+            this.Load += new System.EventHandler(this.frmArtículos_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,10 +269,11 @@
         private System.Windows.Forms.ComboBox cmbMarcas;
         private System.Windows.Forms.Label lblPrecio;
         private System.Windows.Forms.Label lblNombre;
-        private System.Windows.Forms.Button btnAgregar;
+        private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.PictureBox pbImagen;
         private System.Windows.Forms.TextBox txtPrecio;
+        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

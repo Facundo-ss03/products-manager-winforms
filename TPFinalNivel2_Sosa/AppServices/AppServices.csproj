@@ -41,8 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Consultas.cs" />
+    <Compile Include="AccesoDatos.cs" />
+    <Compile Include="ConsultasArticulos.cs" />
+    <Compile Include="ConsultasCategorias.cs" />
+    <Compile Include="ConsultasMarcas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppModel\AppModel.csproj">
+      <Project>{b166953d-9eb4-44b1-a282-7d01035ab27e}</Project>
+      <Name>AppModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

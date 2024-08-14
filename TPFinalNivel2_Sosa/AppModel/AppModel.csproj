@@ -55,14 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articulos.cs" />
-    <Compile Include="ManejoDeConsultas.cs" />
+    <Compile Include="Categoria.cs" />
+    <Compile Include="Marca.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AppServices\AppServices.csproj">
-      <Project>{5ad461a5-d8eb-4fac-8512-7d61695c102a}</Project>
-      <Name>AppServices</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

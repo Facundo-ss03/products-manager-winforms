@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmDetalles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDetalles.Designer.cs">
+      <DependentUpon>frmDetalles.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +66,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmDetalles.resx">
+      <DependentUpon>frmDetalles.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
@@ -89,6 +98,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppController\AppController.csproj">
+      <Project>{60acd0ad-8d42-456e-ada0-739fad8b3e88}</Project>
+      <Name>AppController</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppModel\AppModel.csproj">
       <Project>{b166953d-9eb4-44b1-a282-7d01035ab27e}</Project>
       <Name>AppModel</Name>

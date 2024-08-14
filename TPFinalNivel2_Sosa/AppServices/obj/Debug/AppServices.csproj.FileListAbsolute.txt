@@ -10,3 +10,6 @@ C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\obj\Debug\Ap
 C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.pdb
 C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppServices.dll
 C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppServices.pdb
+C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppModel.dll
+C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppModel.pdb
+C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServi.98DF7DA4.Up2Date
