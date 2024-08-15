@@ -246,6 +246,7 @@
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.lblPrecio);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmArtículos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";

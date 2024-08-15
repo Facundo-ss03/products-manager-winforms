@@ -69,6 +69,7 @@ namespace presentacion
                     {
                         consultas.eliminar(seleccionado.id);
                         controller.actualizarDataGrid(dataGridView1);
+                        tool.RemoveAll();
                     }
                 }
             }

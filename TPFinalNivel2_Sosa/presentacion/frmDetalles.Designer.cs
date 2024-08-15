@@ -156,6 +156,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnCerrar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmDetalles";
             this.Text = "frmDetalles";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
