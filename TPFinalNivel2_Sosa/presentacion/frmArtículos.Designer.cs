@@ -250,6 +250,7 @@
             this.Name = "frmArtículos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmArtículos_FormClosing);
             this.Load += new System.EventHandler(this.frmArtículos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

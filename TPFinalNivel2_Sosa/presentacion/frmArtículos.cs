@@ -119,7 +119,7 @@ namespace presentacion
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Dispose();
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -187,5 +187,9 @@ namespace presentacion
             controller.cargarImagen(pictureBox1, txtUrlImagen.Text);
         }
 
+        private void frmArtículos_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            GC.Collect();
+        }
     }
 }

@@ -55,7 +55,6 @@ namespace AppServices
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -71,10 +70,6 @@ namespace AppServices
             catch (Exception ex)
             {
                 throw ex;
-            }
-            finally
-            {
-                conexion.Close();
             }
         }
 

@@ -101,9 +101,18 @@ namespace AppServices
         {
             AccesoDatos datos = new AccesoDatos();
 
-            datos.setearConsulta("Delete From ARTICULOS Where Id = @Id");
-            datos.Cmd.Parameters.AddWithValue("@Id", id);
-            datos.ejecutarAccion();
+            try
+            {
+                datos.setearConsulta("Delete From ARTICULOS Where Id = @Id");
+                datos.Cmd.Parameters.AddWithValue("@Id", id);
+                datos.ejecutarAccion();
+                datos.cerrarConexion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
 
