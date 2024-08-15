@@ -57,17 +57,19 @@ namespace presentacion
         {
             ManejoDeConsultas consultas = new ManejoDeConsultas();
             Articulos seleccionado;
-
+            ToolTip tool = new ToolTip();
             try
             {
-                seleccionado = (Articulos)dataGridView1.CurrentRow.DataBoundItem;
-
-                DialogResult respuesta = MessageBox.Show("¿Está seguro de que desea eliminar este artículo?", "Eliminado con éxito.", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                if(respuesta == DialogResult.Yes)
+                if (dataGridView1.Rows.Count != 0)
                 {
-                    consultas.eliminar(seleccionado.id);
-                    controller.actualizarDataGrid(dataGridView1);
+                    seleccionado = (Articulos)dataGridView1.CurrentRow.DataBoundItem;
+                    DialogResult respuesta = MessageBox.Show("¿Está seguro de que desea eliminar este artículo?", "Eliminado con éxito.", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (respuesta == DialogResult.Yes)
+                    {
+                        consultas.eliminar(seleccionado.id);
+                        controller.actualizarDataGrid(dataGridView1);
+                    }
                 }
             }
             catch (Exception)
