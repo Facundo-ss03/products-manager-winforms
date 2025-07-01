@@ -13,3 +13,12 @@ C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\Ap
 C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppModel.dll
 C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppModel.pdb
 C:\Users\Facundo\Desktop\Nivel2Final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServi.98DF7DA4.Up2Date
+F:\repositorios\Nivel2Final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.dll
+F:\repositorios\Nivel2Final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.pdb
+F:\repositorios\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppServices.dll
+F:\repositorios\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppServices.pdb
+F:\repositorios\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppModel.dll
+F:\repositorios\Nivel2Final\TPFinalNivel2_Sosa\AppServices\bin\Debug\AppModel.pdb
+F:\repositorios\Nivel2Final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.csproj.AssemblyReference.cache
+F:\repositorios\Nivel2Final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.csproj.CoreCompileInputs.cache
+F:\repositorios\Nivel2Final\TPFinalNivel2_Sosa\AppServices\obj\Debug\AppServices.csproj.CopyComplete
