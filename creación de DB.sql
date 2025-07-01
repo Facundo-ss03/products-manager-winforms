@@ -7,19 +7,19 @@ begin
 	ON
 	primary
 		(name = catalogoPrimary,
-		filename = 'C:\Users\Public\Downloads\catalogoPrimary.mdf',		-- se puede cambiar por una carpeta a elección
+		filename = 'F:\repositorios\Nivel2Final\database\catalogoPrimary.mdf',		-- se puede cambiar por una carpeta a elección
 		size = 50MB,
 		maxsize = 200MB,
 		filegrowth = 20),
 	filegroup catalogoIFG
 		(name = catalogoData,
-		filename = 'C:\Users\Public\Downloads\catalogoData.ndf',
+		filename = 'F:\repositorios\Nivel2Final\database\catalogoData.ndf',
 		size = 200MB,
 		maxsize = 800,
 		filegrowth = 100)
 	log on
 		(name = catalogoLog,
-		filename = 'C:\Users\Public\Downloads\catalogoLog.ldf',
+		filename = 'F:\repositorios\Nivel2Final\database\catalogoLog.ldf',
 		size = 300MB,
 		maxsize = 800,
 		filegrowth = 100);
