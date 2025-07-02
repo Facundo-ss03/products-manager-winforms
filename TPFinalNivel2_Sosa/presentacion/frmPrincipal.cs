@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using AppModel;
 using AppController;
-using System.Net;
 
 namespace presentacion
 {
@@ -46,8 +35,7 @@ namespace presentacion
         {
             if(dataGridView1.Rows.Count != 0)
             {
-                Articulos seleccionado = (Articulos)dataGridView1.CurrentRow.DataBoundItem;
-                frmArtículos modificar = new frmArtículos(dataGridView1, seleccionado);
+                frmArtículos modificar = new frmArtículos(dataGridView1, dataGridView1.CurrentRow.DataBoundItem);
 
                 modificar.ShowDialog();
             }
@@ -56,18 +44,16 @@ namespace presentacion
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             ManejoDeConsultas consultas = new ManejoDeConsultas();
-            Articulos seleccionado;
             ToolTip tool = new ToolTip();
             try
             {
                 if (dataGridView1.Rows.Count != 0)
                 {
-                    seleccionado = (Articulos)dataGridView1.CurrentRow.DataBoundItem;
                     DialogResult respuesta = MessageBox.Show("¿Está seguro de que desea eliminar este artículo?", "Eliminado con éxito.", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (respuesta == DialogResult.Yes)
                     {
-                        consultas.eliminar(seleccionado.id);
+                        consultas.eliminar(dataGridView1.CurrentRow.DataBoundItem);
                         controller.actualizarDataGrid(dataGridView1);
                         tool.RemoveAll();
                     }
@@ -86,26 +72,22 @@ namespace presentacion
 
             if(dataGridView1.Rows.Count > 0)
             {
-                Articulos articulo = (Articulos)dataGridView1.Rows[0].DataBoundItem;
-                controller.cargarImagen(pbImagen, articulo.ImagenUrl);
+                controller.cargarImagen(pbImagen, dataGridView1.Rows[0].DataBoundItem);
             }
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            Articulos articulo = (Articulos)dataGridView1.CurrentRow.DataBoundItem;
-            controller.cargarImagen(pbImagen, articulo.ImagenUrl);
+            controller.cargarImagen(pbImagen, dataGridView1.CurrentRow.DataBoundItem);
         }
 
         private void btnVerDetalles_Click(object sender, EventArgs e)
         {
             frmDetalles detalles;
-            Articulos seleccionado;
 
             try
             {
-                seleccionado = (Articulos)dataGridView1.CurrentRow.DataBoundItem;
-                detalles = new frmDetalles(seleccionado);
+                detalles = new frmDetalles(dataGridView1.CurrentRow.DataBoundItem);
                 detalles.ShowDialog();
             }
             catch (Exception)

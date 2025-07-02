@@ -21,8 +21,11 @@ namespace presentacion
             this.dataGrid = dgv;
         }
 
-        public frmArtículos(DataGridView dgv, Articulos seleccionado)
+        public frmArtículos(DataGridView dgv, Object seleccionado)
         {
+            if (!(seleccionado is Articulo))
+                throw new ArgumentException("El objeto no es de tipo Articulo.");
+
             InitializeComponent();
 
             this.controller = new ManejoDeConsultas();
@@ -30,13 +33,13 @@ namespace presentacion
             controller.cargarSelector(cmbMarcas, "MARCAS");
             controller.cargarSelector(cmbCategorias, "CATEGORIAS");
 
-            this.articulo = seleccionado;
+            this.articulo = (Articulo)seleccionado;
             this.dataGrid = dgv;
 
         }
 
         private DataGridView dataGrid;
-        private Articulos articulo;
+        private Articulo articulo;
         private ManejoDeConsultas controller;
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -51,33 +54,15 @@ namespace presentacion
 
                     Categoria categoria = (Categoria)cmbCategorias.SelectedItem;
                     Marca marca = (Marca)cmbMarcas.SelectedItem;
-                    SqlMoney precio = SqlMoney.Parse(txtPrecio.Text);
+                    double precio = Double.Parse(txtPrecio.Text);
 
-                    if (articulo == null)
+                    if(articulo == null)
                     {
-                        articulo = new Articulos();
-                    }
-
-                    articulo.codigo = codigo;
-                    articulo.nombre = nombre;
-                    articulo.descripcion = descripcion;
-                    articulo.marca = new Marca();
-                    articulo.marca.id = marca.id;
-                    articulo.marca.descripcion = marca.descripcion;
-                    articulo.categoria = new Categoria();
-                    articulo.categoria.descripcion = categoria.descripcion;
-                    articulo.categoria.id = categoria.id;
-                    articulo.ImagenUrl = url;
-                    articulo.precio = precio;
-
-                    if(articulo.id == 0)
-                    {
-                        controller.agregar(articulo);
+                        controller.agregar(codigo, nombre, descripcion, marca.id, categoria.id, url, precio);
                         controller.actualizarDataGrid(dataGrid);
-                    }
-                    else
+                    } else
                     {
-                        controller.modificar(articulo);
+                        controller.modificar(articulo.id, codigo, nombre, descripcion, marca.id, categoria.id, url, precio);
                         controller.actualizarDataGrid(dataGrid);
                     }
                 }

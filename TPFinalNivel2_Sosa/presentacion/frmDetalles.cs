@@ -14,17 +14,18 @@ namespace presentacion
 {
     public partial class frmDetalles : Form
     {
-        public frmDetalles(Articulos articulo)
+        public frmDetalles(Object seleccion)
         {
             InitializeComponent();
 
             this.controller = new ManejoDeConsultas();
+            Articulo articulo = (Articulo)seleccion;
             cargarDatos(articulo);
         }
 
         ManejoDeConsultas controller;
 
-        private void cargarDatos(Articulos articulo)
+        private void cargarDatos(Articulo articulo)
         {
             lblCodigo.Text += articulo.codigo;
             lblNombre.Text += articulo.nombre;

@@ -18,10 +18,11 @@ namespace AppServices
 
                 while (datos.Reader.Read())
                 {
-                    Categoria categoria = new Categoria();
+                    
+                    int id = (int)datos.Reader["Id"];
+                    string descripcion = (string)datos.Reader["Descripcion"];
 
-                    categoria.id = (int)datos.Reader["Id"];
-                    categoria.descripcion = (string)datos.Reader["Descripcion"];
+                    Categoria categoria = new Categoria(id, descripcion);
 
                     lista.Add(categoria);
                 }

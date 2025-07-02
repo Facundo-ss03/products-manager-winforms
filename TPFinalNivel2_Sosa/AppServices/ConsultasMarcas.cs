@@ -18,10 +18,11 @@ namespace AppServices
 
                 while (datos.Reader.Read())
                 {
-                    Marca marca = new Marca();
+                    
+                    int id = (int)datos.Reader["Id"];
+                    string descripcion = (string)datos.Reader["Descripcion"];
 
-                    marca.id = (int)datos.Reader["Id"];
-                    marca.descripcion = (string)datos.Reader["Descripcion"];
+                    Marca marca = new Marca(id, descripcion);
 
                     lista.Add(marca);
                 }
@@ -31,7 +32,6 @@ namespace AppServices
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally

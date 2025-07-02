@@ -10,8 +10,8 @@ namespace AppController
     public class ManejoDeConsultas
     {
 
-        public List<Articulos> articulos;
-        public DataGridView DataGrid;
+        private List<Articulo> articulos;
+        private DataGridView DataGrid;
 
         public void filtrar(DataGridView dgv, string criterio, string busqueda)
         {
@@ -96,22 +96,26 @@ namespace AppController
             }
         }
 
-        public void agregar(Articulos nuevo)
+        public void agregar(string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string URLImagen, double precio)
         {
             ConsultasArticulos consulta = new ConsultasArticulos();
-            consulta.agregarArticulo(nuevo.codigo, nuevo.nombre, nuevo.descripcion, nuevo.marca.id, nuevo.categoria.id, nuevo.ImagenUrl, nuevo.precio);
+            consulta.agregarArticulo(codigo, nombre, descripcion, idMarca, idCategoria, URLImagen, precio);
         }
 
-        public void modificar(Articulos nuevo)
+        public void modificar(int id, string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string UrlImagen, double precio)
         {
             ConsultasArticulos consulta = new ConsultasArticulos();
-            consulta.modificarArticulo(nuevo.id, nuevo.codigo, nuevo.nombre, nuevo.descripcion, nuevo.marca.id, nuevo.categoria.id, nuevo.ImagenUrl, nuevo.precio);
+            consulta.modificarArticulo(id, codigo, nombre, descripcion, idMarca, idCategoria, UrlImagen, precio);
         }
 
-        public void eliminar(int id)
+        public void eliminar(Object seleccion)
         {
+            if (!(seleccion is Articulo))
+                throw new ArgumentException("El objeto no es de tipo Artículo");
+
             ConsultasArticulos consulta = new ConsultasArticulos();
-            consulta.eliminarArticulo(id);
+            Articulo articulo = (Articulo)seleccion;
+            consulta.eliminarArticulo(articulo.id);
         }
 
         public bool comprobarCampoNumerico(string cadena)
@@ -189,13 +193,14 @@ namespace AppController
             return salida;
         }
 
-        public void cargarImagen(PictureBox box, string imagen)
+        public void cargarImagen(PictureBox box, Object seleccion)
         {
             string imagenNotFound = "https://previews.123rf.com/images/yoginta/yoginta2301/yoginta230100567/196853824-imagen-no-encontrada-ilustraci%C3%B3n-vectorial.jpg";
 
             try
             {
-                box.Load(imagen);
+                Articulo articulo = (Articulo)seleccion;
+                box.Load(articulo.ImagenUrl);
             }
             catch (Exception ex)
             {

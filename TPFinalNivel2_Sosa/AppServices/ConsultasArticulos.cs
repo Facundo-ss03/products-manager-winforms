@@ -8,9 +8,7 @@ namespace AppServices
 {
     public class ConsultasArticulos
     {
-
-        private List<Articulos> listaArticulos;
-
+        private List<Articulo> listaArticulos;
         public DataTable consultarColumnas()
         {
             DataTable tabla = new DataTable();
@@ -23,20 +21,36 @@ namespace AppServices
             return tabla;
         }
 
-        public List<Articulos> consultarTablaArticulos()
+        public List<Articulo> consultarTablaArticulos()
         {
             AccesoDatos datos = new AccesoDatos();
-            listaArticulos = new List<Articulos>();
-
+            //listaArticulos = new List<Articulos>();
+            listaArticulos = new List<Articulo>();
             try
             {
-                datos.setearConsulta("select A.Id, A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.ImagenUrl, A.Precio from ARTICULOS A, MARCAS M, CATEGORIAS C where M.Id = IdMarca AND C.Id = IdCategoria");
+                datos.setearConsulta("select A.Id, A.Codigo, A.Nombre, A.Descripcion, A.IdMarca, A.IdCategoria, M.Descripcion Marca, C.Descripcion Categoria, A.ImagenUrl, A.Precio from ARTICULOS A, MARCAS M, CATEGORIAS C where M.Id = IdMarca AND C.Id = IdCategoria");
                 datos.ejecutarLectura();
 
                 while (datos.Reader.Read())
                 {
-                    Articulos articulo = new Articulos();
+                    int id = (int)datos.Reader["Id"];
+                    string codigo = (string)datos.Reader["Codigo"];
+                    string nombre = (string)datos.Reader["Nombre"];
+                    string descripcion = (string)datos.Reader["Descripcion"];
 
+                    int idMarca = (int)datos.Reader["IdMarca"];
+                    string descripcionMarca = (string)datos.Reader["Marca"];
+                    Marca marca = new Marca(idMarca, descripcionMarca);
+
+                    int idCategoria = (int)datos.Reader["IdCategoria"];
+                    string descripcionCategoria = (string)datos.Reader["Categoria"];
+                    Categoria categoria = new Categoria(idCategoria, descripcionCategoria);
+
+                    SqlMoney precio = SqlMoney.Parse(datos.Reader["Precio"].ToString());
+                    string ImagenUrl = (string)datos.Reader["ImagenUrl"];
+
+                    Articulo articulo = new Articulo(id, codigo, nombre, descripcion, marca, categoria, ImagenUrl, precio);
+                    /*
                     articulo.id = (int)datos.Reader["Id"];
                     articulo.codigo = (string)datos.Reader["Codigo"];
                     articulo.nombre = (string)datos.Reader["Nombre"];
@@ -47,7 +61,7 @@ namespace AppServices
                     articulo.categoria.descripcion = (string)datos.Reader["Categoria"];
                     articulo.precio = SqlMoney.Parse(datos.Reader["Precio"].ToString());
                     articulo.ImagenUrl = (string)datos.Reader["ImagenUrl"];
-
+                    */
                     listaArticulos.Add(articulo);
                 }
 
@@ -56,7 +70,6 @@ namespace AppServices
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
@@ -65,7 +78,7 @@ namespace AppServices
             }
         }
 
-        public void agregarArticulo(string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string url, SqlMoney precio)
+        public void agregarArticulo(string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string url, double precio)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -78,7 +91,7 @@ namespace AppServices
                 datos.Cmd.Parameters.AddWithValue("@IdMarca", idMarca);
                 datos.Cmd.Parameters.AddWithValue("@IdCategoria", idCategoria);
                 datos.Cmd.Parameters.AddWithValue("@ImagenUrl", url);
-                datos.Cmd.Parameters.AddWithValue("@Precio", precio);
+                datos.Cmd.Parameters.AddWithValue("@Precio", new SqlMoney(precio));
 
                 datos.ejecutarAccion();
             }
@@ -110,8 +123,7 @@ namespace AppServices
             }
         }
 
-
-        public void modificarArticulo(int id, string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string url, SqlMoney precio)
+        public void modificarArticulo(int id, string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string url, double precio)
         {
             AccesoDatos datos = new AccesoDatos();
 
@@ -125,7 +137,7 @@ namespace AppServices
                 datos.Cmd.Parameters.AddWithValue("@IdMarca", idMarca);
                 datos.Cmd.Parameters.AddWithValue("@IdCategoria", idCategoria);
                 datos.Cmd.Parameters.AddWithValue("@ImagenUrl", url);
-                datos.Cmd.Parameters.AddWithValue("@Precio", precio);
+                datos.Cmd.Parameters.AddWithValue("@Precio", new SqlMoney(precio));
 
                 datos.ejecutarAccion();
             }
