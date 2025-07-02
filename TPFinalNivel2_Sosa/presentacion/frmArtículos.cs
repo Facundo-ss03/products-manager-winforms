@@ -1,13 +1,7 @@
 ﻿using AppModel;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlTypes;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AppController;
 
@@ -23,7 +17,7 @@ namespace presentacion
 
             controller.cargarSelector(cmbMarcas, "MARCAS");
             controller.cargarSelector(cmbCategorias, "CATEGORIAS");
-
+            articulo = null;
             this.dataGrid = dgv;
         }
 
@@ -42,7 +36,7 @@ namespace presentacion
         }
 
         private DataGridView dataGrid;
-        private Articulos articulo = null;
+        private Articulos articulo;
         private ManejoDeConsultas controller;
 
         private void btnAceptar_Click(object sender, EventArgs e)
