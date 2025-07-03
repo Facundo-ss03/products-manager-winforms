@@ -15,6 +15,7 @@ namespace AppServices
         private SqlCommand cmd;
         private SqlDataReader reader;
         private SqlDataAdapter adapter;
+        
         public SqlDataAdapter Adapter
         {
             get { return adapter; }
