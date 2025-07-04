@@ -42,11 +42,12 @@ namespace presentacion
         private Articulo articulo;
         private ManejoDeConsultas controller;
 
-        private void btnAceptar_Click(object sender, EventArgs e)
-        {
-            {
-                if (comprobarCampos())
-                {
+        private void btnAceptar_Click(object sender, EventArgs e){
+
+            DialogResult respuesta = DialogResult.Yes;
+            bool agregadoExitoso = false;
+                try {
+
                     string codigo = txtCodigo.Text;
                     string nombre = txtNombre.Text;
                     string descripcion = txtDescripcion.Text;
@@ -54,25 +55,33 @@ namespace presentacion
 
                     Categoria categoria = (Categoria)cmbCategorias.SelectedItem;
                     Marca marca = (Marca)cmbMarcas.SelectedItem;
+
                     double precio = Double.Parse(txtPrecio.Text);
 
-                    if(articulo == null)
-                    {
-                        controller.agregar(codigo, nombre, descripcion, marca.id, categoria.id, url, precio);
+                    if (articulo == null) {
+
+                        agregadoExitoso = controller.agregar(txtCodigo.Text, txtNombre.Text, txtDescripcion.Text, marca.id, categoria.id, txtUrlImagen.Text, precio);
                         controller.actualizarDataGrid(dataGrid);
-                    } else
-                    {
-                        controller.modificar(articulo.id, codigo, nombre, descripcion, marca.id, categoria.id, url, precio);
+
+                    } else {
+
+                        controller.modificar(articulo.id, txtCodigo.Text, txtNombre.Text, txtDescripcion.Text,
+                                                    marca.id, categoria.id, txtUrlImagen.Text, precio);
                         controller.actualizarDataGrid(dataGrid);
+
+                        }
                     }
+                catch (Exception ex){
+
+                    Console.WriteLine(ex.ToString());
+
+                    respuesta = MessageBox.Show("Los datos ingresados son inválidos. ¿Desea seguir editando?", "¡Advertencia!",
+                                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (respuesta.Equals(DialogResult.No))
+                        Close();
                 }
-                else
-                {
-                    MessageBox.Show("Hay campos con datos incorrectos");
-                    return;
-                }
-            }
-            this.Close();
+            if (agregadoExitoso) Close();
         }
 
         private void frmArtículos_Load(object sender, EventArgs e)
@@ -91,26 +100,25 @@ namespace presentacion
 
                 cmbMarcas.Text = articulo.marca.descripcion;
                 cmbCategorias.Text = articulo.categoria.descripcion;
+                controller.cargarImagen(pictureBox1, articulo);
             }
 
-            controller.cargarImagen(pictureBox1, "");
+            controller.cargarImagen(pictureBox1, null);
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.Dispose();
+            Close();
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            txtCodigo.Text = "";
-            txtNombre.Text = "";
-            txtDescripcion.Text = "";
-            txtPrecio.Text = "";
-            txtUrlImagen.Text = "";
-
-            cmbMarcas.Text = "";
-            cmbCategorias.Text = "";
+            txtCodigo.Clear();
+            txtNombre.Clear();
+            txtDescripcion.Clear();
+            txtPrecio.Clear();
+            txtUrlImagen.Clear();
 
         }
 

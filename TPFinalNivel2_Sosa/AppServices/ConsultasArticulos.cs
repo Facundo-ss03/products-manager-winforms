@@ -8,7 +8,6 @@ namespace AppServices
 {
     public class ConsultasArticulos
     {
-        private List<Articulo> listaArticulos;
         public DataTable consultarColumnas()
         {
             DataTable tabla = new DataTable();
@@ -24,8 +23,8 @@ namespace AppServices
         public List<Articulo> consultarTablaArticulos()
         {
             AccesoDatos datos = new AccesoDatos();
-            //listaArticulos = new List<Articulos>();
-            listaArticulos = new List<Articulo>();
+            List<Articulo> listaArticulos = new List<Articulo>();
+
             try
             {
                 datos.setearConsulta("select A.Id, A.Codigo, A.Nombre, A.Descripcion, A.IdMarca, A.IdCategoria, M.Descripcion Marca, C.Descripcion Categoria, A.ImagenUrl, A.Precio from ARTICULOS A, MARCAS M, CATEGORIAS C where M.Id = IdMarca AND C.Id = IdCategoria");
@@ -50,18 +49,7 @@ namespace AppServices
                     string ImagenUrl = (string)datos.Reader["ImagenUrl"];
 
                     Articulo articulo = new Articulo(id, codigo, nombre, descripcion, marca, categoria, ImagenUrl, precio);
-                    /*
-                    articulo.id = (int)datos.Reader["Id"];
-                    articulo.codigo = (string)datos.Reader["Codigo"];
-                    articulo.nombre = (string)datos.Reader["Nombre"];
-                    articulo.descripcion = (string)datos.Reader["Descripcion"];
-                    articulo.marca = new Marca();
-                    articulo.marca.descripcion = (string)datos.Reader["Marca"];
-                    articulo.categoria = new Categoria();
-                    articulo.categoria.descripcion = (string)datos.Reader["Categoria"];
-                    articulo.precio = SqlMoney.Parse(datos.Reader["Precio"].ToString());
-                    articulo.ImagenUrl = (string)datos.Reader["ImagenUrl"];
-                    */
+
                     listaArticulos.Add(articulo);
                 }
 
@@ -70,7 +58,7 @@ namespace AppServices
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Ocurrió un error al consultar la tabla de artículos. " + ex.ToString());
             }
             finally
             {
@@ -78,26 +66,34 @@ namespace AppServices
             }
         }
 
-        public void agregarArticulo(string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string url, double precio)
+        public bool agregarArticulo(string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string url, double precio)
         {
             AccesoDatos datos = new AccesoDatos();
-
             try
             {
-                datos.setearConsulta("INSERT INTO ARTICULOS(Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) VALUES(@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @ImagenUrl, @Precio)");
-                datos.Cmd.Parameters.AddWithValue("@Codigo", codigo);
-                datos.Cmd.Parameters.AddWithValue("@Nombre", nombre);
-                datos.Cmd.Parameters.AddWithValue("@Descripcion", descripcion);
-                datos.Cmd.Parameters.AddWithValue("@IdMarca", idMarca);
-                datos.Cmd.Parameters.AddWithValue("@IdCategoria", idCategoria);
-                datos.Cmd.Parameters.AddWithValue("@ImagenUrl", url);
-                datos.Cmd.Parameters.AddWithValue("@Precio", new SqlMoney(precio));
+                if (Articulo.validarArgumentos(codigo, nombre, descripcion, idMarca, idCategoria, url, precio))
+                {
 
-                datos.ejecutarAccion();
+                    datos.setearConsulta("INSERT INTO ARTICULOS(Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) VALUES(@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @ImagenUrl, @Precio)");
+                    datos.Cmd.Parameters.AddWithValue("@Codigo", codigo);
+                    datos.Cmd.Parameters.AddWithValue("@Nombre", nombre);
+                    datos.Cmd.Parameters.AddWithValue("@Descripcion", descripcion);
+                    datos.Cmd.Parameters.AddWithValue("@IdMarca", idMarca);
+                    datos.Cmd.Parameters.AddWithValue("@IdCategoria", idCategoria);
+                    datos.Cmd.Parameters.AddWithValue("@ImagenUrl", url);
+                    datos.Cmd.Parameters.AddWithValue("@Precio", new SqlMoney(precio));
+
+                    datos.ejecutarAccion();
+                    return true;
+
+                } else {
+                    return false;
+                }
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Ocurrió un error al agregar un artículo. " + ex.ToString());
             }
             finally
             {

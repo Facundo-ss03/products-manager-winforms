@@ -4,13 +4,28 @@ using System.Data;
 using System.Windows.Forms;
 using AppServices;
 using AppModel;
+using System.Linq;
+using System.IO;
 
 namespace AppController
 {
     public class ManejoDeConsultas
     {
+        public ManejoDeConsultas()
+        {
+            ConsultasMarcas consultaMarcas = new ConsultasMarcas();
+            ConsultasCategorias consultaCategorias = new ConsultasCategorias();
+            ConsultasArticulos consultaArticulos = new ConsultasArticulos();
+
+            this.categorias = consultaCategorias.listarCategorias();
+            this.marcas = consultaMarcas.listarMarcas();
+            this.columnas = consultaArticulos.consultarColumnas();
+        }
 
         private List<Articulo> articulos;
+        private List<Categoria> categorias;
+        private List<Marca> marcas;
+        private DataTable columnas;
         private DataGridView DataGrid;
 
         public void filtrar(DataGridView dgv, string criterio, string busqueda)
@@ -66,28 +81,17 @@ namespace AppController
             }
             if (comando == "MARCAS")
             {
-                ConsultasMarcas consulta = new ConsultasMarcas();
-                List<Marca> lista;
-                lista = consulta.listarMarcas();
-
-                cmb.DataSource = lista;
+                cmb.DataSource = marcas;
             }
             if (comando == "CATEGORIAS")
             {
-                ConsultasCategorias consulta = new ConsultasCategorias();
-                List<Categoria> lista;
-                lista = consulta.listarCategorias();
-
-                cmb.DataSource = lista;
+                cmb.DataSource = categorias;
             }
         }
 
         public void obtenerColumnas(ComboBox cmb)
         {
-            ConsultasArticulos consulta = new ConsultasArticulos();
-            DataTable tabla = consulta.consultarColumnas();
-
-            foreach (DataColumn item in tabla.Columns)
+            foreach (DataColumn item in columnas.Columns)
             {
                 if(item.ColumnName != "ImagenUrl")
                 {
@@ -96,10 +100,18 @@ namespace AppController
             }
         }
 
-        public void agregar(string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string URLImagen, double precio)
+        public bool agregar(string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string URLImagen, double precio)
         {
-            ConsultasArticulos consulta = new ConsultasArticulos();
-            consulta.agregarArticulo(codigo, nombre, descripcion, idMarca, idCategoria, URLImagen, precio);
+            try
+            {
+                ConsultasArticulos consulta = new ConsultasArticulos();
+                return consulta.agregarArticulo(codigo, nombre, descripcion, idMarca, idCategoria, URLImagen, precio);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al agregar un artículo. " + ex.ToString());
+            }
+
         }
 
         public void modificar(int id, string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string UrlImagen, double precio)
@@ -120,35 +132,9 @@ namespace AppController
 
         public bool comprobarCampoNumerico(string cadena)
         {
-            bool salida = true;
-            try
-            {
-                if(cadena != "")
-                {
-                    foreach (char item in cadena)
-                    {
-                        if (char.IsLetter(item))
-                        {
-                            salida = false;
-                        }
-                    }
-
-                    if (double.Parse(cadena) < 0)
-                    {
-                        salida = false;
-                    }
-                }
-                else
-                {
-                    salida = false;
-                }
-
-                return salida;
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
+            bool cadenaEsVálida = cadena.Length > 0 && !cadena.Any(char.IsLetter);
+            Console.WriteLine(cadenaEsVálida);
+            return cadenaEsVálida;
         }
 
         public bool comprobarCampoDeCaracteres(string cadena)
@@ -196,14 +182,20 @@ namespace AppController
         public void cargarImagen(PictureBox box, Object seleccion)
         {
             string imagenNotFound = "https://previews.123rf.com/images/yoginta/yoginta2301/yoginta230100567/196853824-imagen-no-encontrada-ilustraci%C3%B3n-vectorial.jpg";
+            Articulo articulo;
 
             try
             {
-                Articulo articulo = (Articulo)seleccion;
+                if (seleccion == null || seleccion is Articulo)
+                    throw new ArgumentException("El objeto no es de tipo Artículo o es nulo.");
+
+                articulo = (Articulo)seleccion;
                 box.Load(articulo.ImagenUrl);
+                
             }
             catch (Exception ex)
             {
+                Console.WriteLine("No se encontró la URL de la imagen. " + ex.ToString());
                 box.Load(imagenNotFound);
             }
         }

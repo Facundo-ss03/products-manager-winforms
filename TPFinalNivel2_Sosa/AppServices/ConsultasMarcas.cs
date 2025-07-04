@@ -8,7 +8,7 @@ namespace AppServices
     {
         public List<Marca> listarMarcas()
         {
-            List<Marca> lista = new List<Marca>();
+            List<Marca> listaMarcas = new List<Marca>();
             AccesoDatos datos = new AccesoDatos();
 
             try
@@ -24,10 +24,10 @@ namespace AppServices
 
                     Marca marca = new Marca(id, descripcion);
 
-                    lista.Add(marca);
+                    listaMarcas.Add(marca);
                 }
 
-                return lista;
+                return listaMarcas;
 
             }
             catch (Exception ex)

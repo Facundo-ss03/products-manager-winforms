@@ -15,6 +15,21 @@ namespace AppModel
         public Articulo(int id, string codigo, string nombre, string descripcion, Marca marca, Categoria categoria, string URLimagen, SqlMoney precio)
         {
 
+            validarArgumentos(id, codigo, nombre, descripcion, marca, categoria, URLimagen, precio);
+
+            this.id = id;
+            this.codigo = codigo;
+            this.nombre = nombre;
+            this.descripcion = descripcion;
+            this.marca = marca;
+            this.categoria = categoria;
+            this.ImagenUrl = URLimagen;
+            this.precio = precio;
+        }
+
+        public static bool validarArgumentos(int id, string codigo, string nombre, string descripcion, Marca marca,
+                                        Categoria categoria, string URLimagen, SqlMoney precio)
+        {
             if (id < 0)
                 throw new ArgumentException("El ID es negativo.");
             if (codigo.Length == 0)
@@ -32,44 +47,30 @@ namespace AppModel
             if (precio < 0 || precio.IsNull)
                 throw new ArgumentException("El precio es null o negativo.");
 
+            return true;
 
-            this.id = id;
-            this.codigo = codigo;
-            this.nombre = nombre;
-            this.descripcion = descripcion;
-            this.marca = marca;
-            this.categoria = categoria;
-            this.ImagenUrl = URLimagen;
-            this.precio = precio;
         }
-        /*
-        public Articulo(string codigo, string nombre, string descripcion, Marca marca, Categoria categoria, string URLimagen, SqlMoney precio)
+        public static bool validarArgumentos(string codigo, string nombre, string descripcion, int marca,
+                                        int categoria, string URLimagen, double precio)
         {
-
             if (codigo.Length == 0)
                 throw new ArgumentException("El codigo está vacío.");
             if (nombre.Length == 0)
                 throw new ArgumentException("El nombre está vacío.");
             if (descripcion.Length == 0)
                 throw new ArgumentException("La descripción está vacía.");
-            if (marca == null)
+            if (marca <= 0)
                 throw new ArgumentException("La marca es null.");
-            if (categoria == null)
+            if (categoria <= 0)
                 throw new ArgumentException("La categoría es null.");
             if (URLimagen.Length == 0)
                 throw new ArgumentException("La URL de la imagen está vacía.");
             if (precio < 0)
                 throw new ArgumentException("El precio es null o negativo.");
 
+            return true;
 
-            this.codigo = codigo;
-            this.nombre = nombre;
-            this.descripcion = descripcion;
-            this.marca = marca;
-            this.categoria = categoria;
-            this.ImagenUrl = URLimagen;
-            this.precio = precio;
-        }*/
+        }
 
         public int id { get; }
         public string codigo { get; }

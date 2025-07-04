@@ -8,8 +8,8 @@ namespace AppServices
     {
         public List<Categoria> listarCategorias()
         {
-            List<Categoria> lista = new List<Categoria>();
             AccesoDatos datos = new AccesoDatos();
+            List<Categoria> listaCategorias = new List<Categoria>();
 
             try
             {
@@ -24,15 +24,14 @@ namespace AppServices
 
                     Categoria categoria = new Categoria(id, descripcion);
 
-                    lista.Add(categoria);
+                    listaCategorias.Add(categoria);
                 }
 
-                return lista;
+                return listaCategorias;
 
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally

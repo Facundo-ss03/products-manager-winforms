@@ -38,6 +38,7 @@ namespace presentacion
                 frmArtículos modificar = new frmArtículos(dataGridView1, dataGridView1.CurrentRow.DataBoundItem);
 
                 modificar.ShowDialog();
+                GC.Collect();
             }
         }
 
@@ -90,9 +91,9 @@ namespace presentacion
                 detalles = new frmDetalles(dataGridView1.CurrentRow.DataBoundItem);
                 detalles.ShowDialog();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("No hay ningún elemento seleccionado.");
+                MessageBox.Show("No hay ningún elemento seleccionado." + ex.ToString());
             }
 
         }

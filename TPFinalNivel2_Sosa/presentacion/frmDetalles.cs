@@ -19,6 +19,10 @@ namespace presentacion
             InitializeComponent();
 
             this.controller = new ManejoDeConsultas();
+
+            if (!(seleccion is Articulo))
+                throw new InvalidCastException("El objeto pasado por parámetro no es de tipo Artículo.");
+
             Articulo articulo = (Articulo)seleccion;
             cargarDatos(articulo);
         }
@@ -35,7 +39,7 @@ namespace presentacion
             lblMarca.Text += articulo.marca.descripcion;
             lblCategorias.Text += articulo.categoria.descripcion;
 
-            controller.cargarImagen(pictureBox1, articulo.ImagenUrl);
+            controller.cargarImagen(pictureBox1, articulo);
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
