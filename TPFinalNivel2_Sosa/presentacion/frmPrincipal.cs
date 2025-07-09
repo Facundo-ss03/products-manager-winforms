@@ -15,36 +15,41 @@ namespace presentacion
             this.controller = new ManejoDeConsultas();
 
             controller.cargarSelector(cmbCriterioDeBusqueda, "CRITERIOS");
+            controller.cargarSelector(cmbEliminarMarca, "MARCAS");
+            controller.cargarSelector(cmbEliminarCategoria, "CATEGORIAS");
         }
 
         ManejoDeConsultas controller;
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            controller.filtrar(dataGridView1, cmbCriterioDeBusqueda.Text, txtBusqueda.Text.ToUpper());
+            dataGridView1.DataSource = controller.filtrar(cmbCriterioDeBusqueda.Text, txtBusqueda.Text.ToUpper());
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            frmArtículos articulos = new frmArtículos(dataGridView1);
+            frmArtículos agregar = new frmArtículos();
 
-            articulos.ShowDialog();
+            agregar.ShowDialog();
+            agregar.Limpiar(true);
+            dataGridView1.DataSource = controller.actualizarDataGrid();
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
             if(dataGridView1.Rows.Count != 0)
             {
-                frmArtículos modificar = new frmArtículos(dataGridView1, dataGridView1.CurrentRow.DataBoundItem);
+                frmArtículos modificar = new frmArtículos(/*dataGridView1, */dataGridView1.CurrentRow.DataBoundItem);
 
                 modificar.ShowDialog();
+                modificar.Limpiar(true);
+                dataGridView1.DataSource = controller.actualizarDataGrid();
                 GC.Collect();
             }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            ManejoDeConsultas consultas = new ManejoDeConsultas();
             ToolTip tool = new ToolTip();
             try
             {
@@ -54,21 +59,34 @@ namespace presentacion
 
                     if (respuesta == DialogResult.Yes)
                     {
-                        consultas.eliminar(dataGridView1.CurrentRow.DataBoundItem);
-                        controller.actualizarDataGrid(dataGridView1);
+                        if (dataGridView1.SelectedRows.Count == 1)
+                        {
+                            controller.eliminar(dataGridView1.CurrentRow.DataBoundItem);
+                        }
+                        else
+                        {
+                            controller.eliminar(dataGridView1.SelectedRows);
+                        }
+
+                        dataGridView1.DataSource = controller.actualizarDataGrid();
                         tool.RemoveAll();
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("No hay ningún elemento seleccionado.");
+                MessageBox.Show("No hay ningún elemento seleccionado. " + ex.ToString());
+            }
+            finally
+            {
+                tool.Dispose();
+                controller.Dispose();
             }
         }
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            controller.actualizarDataGrid(dataGridView1);
+            dataGridView1.DataSource = controller.actualizarDataGrid();
             dataGridView1.Columns["ImagenUrl"].Visible = false;
 
             if(dataGridView1.Rows.Count > 0)
@@ -84,16 +102,79 @@ namespace presentacion
 
         private void btnVerDetalles_Click(object sender, EventArgs e)
         {
-            frmDetalles detalles;
-
             try
             {
-                detalles = new frmDetalles(dataGridView1.CurrentRow.DataBoundItem);
-                detalles.ShowDialog();
+                using (var detalles = new frmDetalles(dataGridView1.CurrentRow.DataBoundItem))
+                {
+                    detalles.ShowDialog();
+                    detalles.Limpiar(true);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("No hay ningún elemento seleccionado." + ex.ToString());
+            }
+
+        }
+
+        private void btnAñadirMarca_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                controller.agregarMarca(txtMarca.Text);
+                controller.cargarSelector(cmbEliminarMarca, "MARCA");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al agregar la marca. " + ex.ToString()); ;
+            }
+        }
+
+        private void btnAñadirCategoría_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                controller.agregarCategoria(txtCaracteristica.Text);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al agregar la categoría. " + ex.ToString());
+            }
+        }
+
+        private void btnEliminarMarca_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                controller.eliminarMarca(cmbEliminarMarca.Text);
+                dataGridView1.DataSource = controller.actualizarDataGrid();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al eliminar la marca. " + ex.ToString());
+            }
+        }
+
+        private void btnEliminarCategoria_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult respuesta = MessageBox.Show("¿Está seguro de que desea eliminar esta categoría? " +
+                                                        "Se eliminarán todos los artículos relacionados a ella.",
+                                                        "Eliminar categoría", MessageBoxButtons.YesNo);
+
+                if(respuesta == DialogResult.Yes)
+                {
+                    controller.eliminarCategoria(txtCaracteristica.Text);
+                    dataGridView1.DataSource = controller.actualizarDataGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al agregar la categoría. " + ex.ToString());
             }
 
         }

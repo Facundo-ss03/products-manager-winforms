@@ -39,6 +39,24 @@ namespace AppServices
                 datos.cerrarConexion();
             }
         }
-        
+
+        public void Agregar(string categoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            datos.setearConsulta("INSERT INTO CATEGORIAS (Descripcion) VALUES('" + categoria + "');");
+            datos.ejecutarAccion();
+            datos.cerrarConexion();
+        }
+
+        public void Eliminar(string categoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            datos.setearConsulta("Delete from CATEGORIAS where Descripcion = '" + categoria + "';");
+            datos.ejecutarAccion();
+            datos.cerrarConexion();
+        }
+
     }
 }

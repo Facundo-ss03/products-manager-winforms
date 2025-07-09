@@ -1,6 +1,5 @@
 ﻿using AppModel;
 using System;
-using System.Data.SqlTypes;
 using System.Drawing;
 using System.Windows.Forms;
 using AppController;
@@ -9,7 +8,7 @@ namespace presentacion
 {
     public partial class frmArtículos : Form
     {
-        public frmArtículos(DataGridView dgv)
+        public frmArtículos()
         {
             InitializeComponent();
 
@@ -18,10 +17,9 @@ namespace presentacion
             controller.cargarSelector(cmbMarcas, "MARCAS");
             controller.cargarSelector(cmbCategorias, "CATEGORIAS");
             articulo = null;
-            this.dataGrid = dgv;
         }
 
-        public frmArtículos(DataGridView dgv, Object seleccionado)
+        public frmArtículos(Object seleccionado)
         {
             if (!(seleccionado is Articulo))
                 throw new ArgumentException("El objeto no es de tipo Articulo.");
@@ -34,18 +32,15 @@ namespace presentacion
             controller.cargarSelector(cmbCategorias, "CATEGORIAS");
 
             this.articulo = (Articulo)seleccionado;
-            this.dataGrid = dgv;
-
         }
 
-        private DataGridView dataGrid;
         private Articulo articulo;
         private ManejoDeConsultas controller;
 
         private void btnAceptar_Click(object sender, EventArgs e){
 
             DialogResult respuesta = DialogResult.Yes;
-            bool agregadoExitoso = false;
+            bool operacionExitosa = false;
                 try {
 
                     string codigo = txtCodigo.Text;
@@ -60,15 +55,13 @@ namespace presentacion
 
                     if (articulo == null) {
 
-                        agregadoExitoso = controller.agregar(txtCodigo.Text, txtNombre.Text, txtDescripcion.Text, marca.id, categoria.id, txtUrlImagen.Text, precio);
-                        controller.actualizarDataGrid(dataGrid);
-
+                        operacionExitosa = controller.agregar(txtCodigo.Text, txtNombre.Text, txtDescripcion.Text, marca.id, categoria.id, txtUrlImagen.Text, precio);
+                        
                     } else {
 
-                        controller.modificar(articulo.id, txtCodigo.Text, txtNombre.Text, txtDescripcion.Text,
+                        operacionExitosa = controller.modificar(articulo.id, txtCodigo.Text, txtNombre.Text, txtDescripcion.Text,
                                                     marca.id, categoria.id, txtUrlImagen.Text, precio);
-                        controller.actualizarDataGrid(dataGrid);
-
+                        
                         }
                     }
                 catch (Exception ex){
@@ -81,7 +74,7 @@ namespace presentacion
                     if (respuesta.Equals(DialogResult.No))
                         Close();
                 }
-            if (agregadoExitoso) Close();
+            if (operacionExitosa) Close();
         }
 
         private void frmArtículos_Load(object sender, EventArgs e)
@@ -178,5 +171,38 @@ namespace presentacion
         {
             GC.Collect();
         }
+        
+        public void Limpiar(bool disposing)
+        {
+            if (disposing)
+            {
+                // Liberar recursos manuales
+                if (articulo != null)
+                {
+                    if(articulo is IDisposable disposableObject)
+                        disposableObject.Dispose();
+
+                    articulo = null;
+                }
+
+                if (controller != null)
+                {
+                    if (controller is IDisposable disposableController)
+                        disposableController.Dispose();
+
+                    controller = null;
+                }
+
+                // Liberar imagen si es necesario
+                if (pictureBox1.Image != null)
+                {
+                    pictureBox1.Image.Dispose();
+                    pictureBox1.Image = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
     }
 }

@@ -6,10 +6,11 @@ using AppServices;
 using AppModel;
 using System.Linq;
 using System.IO;
+using System.Drawing;
 
 namespace AppController
 {
-    public class ManejoDeConsultas
+    public class ManejoDeConsultas : IDisposable
     {
         public ManejoDeConsultas()
         {
@@ -26,47 +27,46 @@ namespace AppController
         private List<Categoria> categorias;
         private List<Marca> marcas;
         private DataTable columnas;
-        private DataGridView DataGrid;
+        private Image imagenTemporal;
 
-        public void filtrar(DataGridView dgv, string criterio, string busqueda)
+
+        public List<Articulo> filtrar(string criterio, string busqueda)
         {
-            if(criterio == "Todos")
+            if (criterio.Equals("Codigo"))
             {
-                dgv.DataSource = articulos;
+                return articulos.FindAll(x => x.codigo.ToUpper().Contains(busqueda));
             }
-            if (criterio == "Codigo")
+            if (criterio.Equals("Nombre"))
             {
-                dgv.DataSource = articulos.FindAll(x => x.codigo.ToUpper().Contains(busqueda));
+                return articulos.FindAll(x => x.nombre.ToUpper().Contains(busqueda));
             }
-            if (criterio == "Nombre")
+            if (criterio.Equals("Descripcion"))
             {
-                dgv.DataSource = articulos.FindAll(x => x.nombre.ToUpper().Contains(busqueda));
+                return articulos.FindAll(x => x.descripcion.ToUpper().Contains(busqueda));
             }
-            if (criterio == "Descripcion")
+            if (criterio.Equals("Marca"))
             {
-                dgv.DataSource = articulos.FindAll(x => x.descripcion.ToUpper().Contains(busqueda));
+                return articulos.FindAll(x => x.marca.descripcion.ToUpper().Contains(busqueda));
             }
-            if (criterio == "Marca")
+            if (criterio.Equals("Categoria"))
             {
-                dgv.DataSource = articulos.FindAll(x => x.marca.descripcion.ToUpper().Contains(busqueda));
+                return articulos.FindAll(x => x.categoria.descripcion.ToUpper().Contains(busqueda));
             }
-            if (criterio == "Categoria")
+            if (criterio.Equals("Precio"))
             {
-                dgv.DataSource = articulos.FindAll(x => x.categoria.descripcion.ToUpper().Contains(busqueda));
+                return articulos.FindAll(x => x.precio.ToString().Contains(busqueda));
             }
-            if (criterio == "Precio")
-            {
-                dgv.DataSource = articulos.FindAll(x => x.precio.ToString().Contains(busqueda));
-            }
+
+            return articulos;
         }
 
-        public void actualizarDataGrid(DataGridView dgv)
+        public List<Articulo> actualizarDataGrid()
         {
             ConsultasArticulos consultasArticulos = new ConsultasArticulos();
 
             articulos = consultasArticulos.consultarTablaArticulos();
 
-            dgv.DataSource = articulos;
+            return articulos;
         }
 
         public void cargarSelector(ComboBox cmb, string comando)
@@ -114,20 +114,40 @@ namespace AppController
 
         }
 
-        public void modificar(int id, string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string UrlImagen, double precio)
+        public bool modificar(int id, string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string UrlImagen, double precio)
         {
             ConsultasArticulos consulta = new ConsultasArticulos();
-            consulta.modificarArticulo(id, codigo, nombre, descripcion, idMarca, idCategoria, UrlImagen, precio);
+            return consulta.modificarArticulo(id, codigo, nombre, descripcion, idMarca, idCategoria, UrlImagen, precio);
         }
 
         public void eliminar(Object seleccion)
         {
-            if (!(seleccion is Articulo))
-                throw new ArgumentException("El objeto no es de tipo Artículo");
+            if (!(seleccion is Articulo) && !(seleccion is DataGridViewSelectedRowCollection))
+                throw new ArgumentException("El objeto no es de tipo Artículo ni una colección.");
 
-            ConsultasArticulos consulta = new ConsultasArticulos();
-            Articulo articulo = (Articulo)seleccion;
-            consulta.eliminarArticulo(articulo.id);
+            if(seleccion is Articulo)
+            {
+                ConsultasArticulos consulta = new ConsultasArticulos();
+                Articulo articulo = (Articulo)seleccion;
+                consulta.eliminarArticulo(articulo.id);
+
+                consulta = null;
+                articulo = null;
+                return;
+            }
+
+            if (seleccion is DataGridViewSelectedRowCollection)
+            {
+                ConsultasArticulos consulta = new ConsultasArticulos();
+                DataGridViewSelectedRowCollection coleccion = (DataGridViewSelectedRowCollection) seleccion;
+
+                foreach (DataGridViewRow fila in coleccion)
+                {
+                    Articulo articulo = (Articulo)fila.DataBoundItem;
+                    consulta.eliminarArticulo(articulo.id);
+                }
+            }
+
         }
 
         public bool comprobarCampoNumerico(string cadena)
@@ -179,30 +199,97 @@ namespace AppController
             return salida;
         }
 
-        public void cargarImagen(PictureBox box, Object seleccion)
+        public void cargarImagen(PictureBox box, string url)
         {
-            string imagenNotFound = "https://previews.123rf.com/images/yoginta/yoginta2301/yoginta230100567/196853824-imagen-no-encontrada-ilustraci%C3%B3n-vectorial.jpg";
-            Articulo articulo;
+            // Lógica similar a la que ya usás, pero liberando la imagen previa
+            if (box.Image != null)
+            {
+                box.Image.Dispose();
+                box.Image = null;
+            }
+
+            // Cargar imagen nueva y guardarla por si luego hay que liberarla manualmente
+            string imagenNotFound = "F:/repositorios/Nivel2Final/resources/imagen-no-encontrada.jpg";
 
             try
             {
-                if (seleccion == null || seleccion is Articulo)
-                    throw new ArgumentException("El objeto no es de tipo Artículo o es nulo.");
 
-                articulo = (Articulo)seleccion;
-                box.Load(articulo.ImagenUrl);
-                
+                box.Load(url);
+                imagenTemporal = box.Image; // Enlazás la imagen temporalmente
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine("No se encontró la URL de la imagen. " + ex.ToString());
                 box.Load(imagenNotFound);
+                imagenTemporal = box.Image;
             }
         }
 
-        public void setearDataGrid(DataGridView grid)
+        public void cargarImagen(PictureBox box, object seleccion)
         {
-            this.DataGrid = grid;
+            // Lógica similar a la que ya usás, pero liberando la imagen previa
+            if (box.Image != null)
+            {
+                box.Image.Dispose();
+                box.Image = null;
+            }
+
+            // Cargar imagen nueva y guardarla por si luego hay que liberarla manualmente
+            string imagenNotFound = "F:/repositorios/Nivel2Final/resources/imagen-no-encontrada.jpg";
+
+            try
+            {
+                if (!(seleccion is Articulo articulo))
+                    throw new ArgumentException("El objeto no es de tipo Artículo.");
+
+                box.Load(articulo.ImagenUrl);
+                imagenTemporal = box.Image; // Enlazás la imagen temporalmente
+            }
+            catch
+            {
+                box.Load(imagenNotFound);
+                imagenTemporal = box.Image;
+            }
+        }
+
+        public void agregarMarca(string marca)
+        {
+            ConsultasMarcas consulta = new ConsultasMarcas();
+            consulta.Agregar(marca);
+        }
+
+        public void agregarCategoria(string categoria)
+        {
+            ConsultasCategorias consulta = new ConsultasCategorias();
+            consulta.Agregar(categoria);
+        }
+
+        public void eliminarCategoria(string categoria)
+        {
+            if(!categorias.Equals("Ninguna"))
+            {
+                ConsultasCategorias consulta = new ConsultasCategorias();
+                consulta.Eliminar(categoria);
+            }
+        }
+
+        public void eliminarMarca(string marca)
+        {
+            if (!marca.Equals("Ninguna")){
+
+                ConsultasMarcas consulta = new ConsultasMarcas();
+                consulta.Eliminar(marca);
+
+            }
+        }
+
+
+
+        public void Dispose()
+        {
+            articulos = null;
+            categorias = null;
+            marcas = null;
+            columnas = null;
         }
     }
 }

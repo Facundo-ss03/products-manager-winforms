@@ -73,7 +73,6 @@ namespace AppServices
             {
                 if (Articulo.validarArgumentos(codigo, nombre, descripcion, idMarca, idCategoria, url, precio))
                 {
-
                     datos.setearConsulta("INSERT INTO ARTICULOS(Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) VALUES(@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @ImagenUrl, @Precio)");
                     datos.Cmd.Parameters.AddWithValue("@Codigo", codigo);
                     datos.Cmd.Parameters.AddWithValue("@Nombre", nombre);
@@ -110,32 +109,41 @@ namespace AppServices
                 datos.setearConsulta("Delete From ARTICULOS Where Id = @Id");
                 datos.Cmd.Parameters.AddWithValue("@Id", id);
                 datos.ejecutarAccion();
-                datos.cerrarConexion();
             }
             catch (Exception ex)
             {
-
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
 
-        public void modificarArticulo(int id, string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string url, double precio)
+        public bool modificarArticulo(int id, string codigo, string nombre, string descripcion, int idMarca, int idCategoria, string url, double precio)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("UPDATE ARTICULOS SET Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, ImagenUrl = @ImagenUrl, Precio = @Precio WHERE Id = @Id");
-                datos.Cmd.Parameters.AddWithValue("@Id", id);
-                datos.Cmd.Parameters.AddWithValue("@Codigo", codigo);
-                datos.Cmd.Parameters.AddWithValue("@Nombre", nombre);
-                datos.Cmd.Parameters.AddWithValue("@Descripcion", descripcion);
-                datos.Cmd.Parameters.AddWithValue("@IdMarca", idMarca);
-                datos.Cmd.Parameters.AddWithValue("@IdCategoria", idCategoria);
-                datos.Cmd.Parameters.AddWithValue("@ImagenUrl", url);
-                datos.Cmd.Parameters.AddWithValue("@Precio", new SqlMoney(precio));
+                if (Articulo.validarArgumentos(codigo, nombre, descripcion, idMarca, idCategoria, url, precio))
+                {
+                    datos.setearConsulta("UPDATE ARTICULOS SET Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, ImagenUrl = @ImagenUrl, Precio = @Precio WHERE Id = @Id");
+                    datos.Cmd.Parameters.AddWithValue("@Id", id);
+                    datos.Cmd.Parameters.AddWithValue("@Codigo", codigo);
+                    datos.Cmd.Parameters.AddWithValue("@Nombre", nombre);
+                    datos.Cmd.Parameters.AddWithValue("@Descripcion", descripcion);
+                    datos.Cmd.Parameters.AddWithValue("@IdMarca", idMarca);
+                    datos.Cmd.Parameters.AddWithValue("@IdCategoria", idCategoria);
+                    datos.Cmd.Parameters.AddWithValue("@ImagenUrl", url);
+                    datos.Cmd.Parameters.AddWithValue("@Precio", new SqlMoney(precio));
 
-                datos.ejecutarAccion();
+                    datos.ejecutarAccion();
+                    return true;
+                } else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {

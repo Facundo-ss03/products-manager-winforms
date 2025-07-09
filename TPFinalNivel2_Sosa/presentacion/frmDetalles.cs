@@ -1,13 +1,6 @@
 ﻿using AppController;
 using AppModel;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace presentacion
@@ -20,16 +13,20 @@ namespace presentacion
 
             this.controller = new ManejoDeConsultas();
 
+            if (seleccion == null)
+                throw new ArgumentException("El objeto pasado por parámetro es nulo.");
+
             if (!(seleccion is Articulo))
                 throw new InvalidCastException("El objeto pasado por parámetro no es de tipo Artículo.");
 
-            Articulo articulo = (Articulo)seleccion;
-            cargarDatos(articulo);
+            this.articulo = (Articulo)seleccion;
+            cargarDatos();                               
         }
 
+        Articulo articulo;
         ManejoDeConsultas controller;
 
-        private void cargarDatos(Articulo articulo)
+        private void cargarDatos()
         {
             lblCodigo.Text += articulo.codigo;
             lblNombre.Text += articulo.nombre;
@@ -42,9 +39,35 @@ namespace presentacion
             controller.cargarImagen(pictureBox1, articulo);
         }
 
+
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+        public void Limpiar(bool disposing)
+        {
+            if (disposing)
+            {
+                // Liberar recursos manuales
+                if (controller != null)
+                {
+                    if (controller is IDisposable disposableController)
+                        disposableController.Dispose();
+
+                    controller = null;
+                }
+
+                // Liberar imagen si es necesario
+                if (pictureBox1.Image != null)
+                {
+                    pictureBox1.Image.Dispose();
+                    pictureBox1.Image = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
     }
 }

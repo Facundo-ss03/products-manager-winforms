@@ -39,5 +39,23 @@ namespace AppServices
                 datos.cerrarConexion();
             }
         }
+    
+        public void Agregar(string marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            datos.setearConsulta("INSERT INTO MARCAS (Descripcion) VALUES('" + marca + "');");
+            datos.ejecutarAccion();
+            datos.cerrarConexion();
+        }
+
+        public void Eliminar(string marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            datos.setearConsulta("Delete from MARCAS where Descripcion = '" + marca + "';");
+            datos.ejecutarAccion();
+            datos.cerrarConexion();
+        }
     }
 }

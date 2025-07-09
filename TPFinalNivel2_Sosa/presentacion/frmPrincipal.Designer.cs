@@ -39,6 +39,14 @@
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnVerDetalles = new System.Windows.Forms.Button();
+            this.btnAñadirMarca = new System.Windows.Forms.Button();
+            this.btnAñadirCategoría = new System.Windows.Forms.Button();
+            this.txtMarca = new System.Windows.Forms.TextBox();
+            this.txtCaracteristica = new System.Windows.Forms.TextBox();
+            this.btnEliminarMarca = new System.Windows.Forms.Button();
+            this.btnEliminarCategoria = new System.Windows.Forms.Button();
+            this.cmbEliminarMarca = new System.Windows.Forms.ComboBox();
+            this.cmbEliminarCategoria = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
@@ -114,10 +122,10 @@
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Location = new System.Drawing.Point(1015, 429);
+            this.btnAgregar.Location = new System.Drawing.Point(952, 429);
             this.btnAgregar.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(173, 48);
+            this.btnAgregar.Size = new System.Drawing.Size(148, 48);
             this.btnAgregar.TabIndex = 1;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
@@ -125,10 +133,10 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(1015, 490);
+            this.btnEliminar.Location = new System.Drawing.Point(1106, 429);
             this.btnEliminar.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(173, 48);
+            this.btnEliminar.Size = new System.Drawing.Size(148, 48);
             this.btnEliminar.TabIndex = 2;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
@@ -136,10 +144,10 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(1015, 551);
+            this.btnModificar.Location = new System.Drawing.Point(952, 490);
             this.btnModificar.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(173, 48);
+            this.btnModificar.Size = new System.Drawing.Size(148, 48);
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
@@ -147,13 +155,89 @@
             // 
             // btnVerDetalles
             // 
-            this.btnVerDetalles.Location = new System.Drawing.Point(1015, 612);
+            this.btnVerDetalles.Location = new System.Drawing.Point(1106, 490);
             this.btnVerDetalles.Name = "btnVerDetalles";
-            this.btnVerDetalles.Size = new System.Drawing.Size(173, 48);
+            this.btnVerDetalles.Size = new System.Drawing.Size(148, 48);
             this.btnVerDetalles.TabIndex = 10;
             this.btnVerDetalles.Text = "Ver detalles";
             this.btnVerDetalles.UseVisualStyleBackColor = true;
             this.btnVerDetalles.Click += new System.EventHandler(this.btnVerDetalles_Click);
+            // 
+            // btnAñadirMarca
+            // 
+            this.btnAñadirMarca.Location = new System.Drawing.Point(952, 551);
+            this.btnAñadirMarca.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.btnAñadirMarca.Name = "btnAñadirMarca";
+            this.btnAñadirMarca.Size = new System.Drawing.Size(148, 22);
+            this.btnAñadirMarca.TabIndex = 11;
+            this.btnAñadirMarca.Text = "Añadir marca";
+            this.btnAñadirMarca.UseVisualStyleBackColor = true;
+            this.btnAñadirMarca.Click += new System.EventHandler(this.btnAñadirMarca_Click);
+            // 
+            // btnAñadirCategoría
+            // 
+            this.btnAñadirCategoría.Location = new System.Drawing.Point(952, 628);
+            this.btnAñadirCategoría.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.btnAñadirCategoría.Name = "btnAñadirCategoría";
+            this.btnAñadirCategoría.Size = new System.Drawing.Size(148, 22);
+            this.btnAñadirCategoría.TabIndex = 12;
+            this.btnAñadirCategoría.Text = "Añadir categoría";
+            this.btnAñadirCategoría.UseVisualStyleBackColor = true;
+            this.btnAñadirCategoría.Click += new System.EventHandler(this.btnAñadirCategoría_Click);
+            // 
+            // txtMarca
+            // 
+            this.txtMarca.Location = new System.Drawing.Point(952, 586);
+            this.txtMarca.Name = "txtMarca";
+            this.txtMarca.Size = new System.Drawing.Size(148, 22);
+            this.txtMarca.TabIndex = 4;
+            // 
+            // txtCaracteristica
+            // 
+            this.txtCaracteristica.Location = new System.Drawing.Point(952, 663);
+            this.txtCaracteristica.Name = "txtCaracteristica";
+            this.txtCaracteristica.Size = new System.Drawing.Size(148, 22);
+            this.txtCaracteristica.TabIndex = 13;
+            // 
+            // btnEliminarMarca
+            // 
+            this.btnEliminarMarca.Location = new System.Drawing.Point(1106, 551);
+            this.btnEliminarMarca.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.btnEliminarMarca.Name = "btnEliminarMarca";
+            this.btnEliminarMarca.Size = new System.Drawing.Size(148, 22);
+            this.btnEliminarMarca.TabIndex = 14;
+            this.btnEliminarMarca.Text = "Eliminar marca";
+            this.btnEliminarMarca.UseVisualStyleBackColor = true;
+            this.btnEliminarMarca.Click += new System.EventHandler(this.btnEliminarMarca_Click);
+            // 
+            // btnEliminarCategoria
+            // 
+            this.btnEliminarCategoria.Location = new System.Drawing.Point(1106, 628);
+            this.btnEliminarCategoria.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
+            this.btnEliminarCategoria.Name = "btnEliminarCategoria";
+            this.btnEliminarCategoria.Size = new System.Drawing.Size(148, 22);
+            this.btnEliminarCategoria.TabIndex = 15;
+            this.btnEliminarCategoria.Text = "Eliminar categoría";
+            this.btnEliminarCategoria.UseVisualStyleBackColor = true;
+            this.btnEliminarCategoria.Click += new System.EventHandler(this.btnEliminarCategoria_Click);
+            // 
+            // cmbEliminarMarca
+            // 
+            this.cmbEliminarMarca.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEliminarMarca.FormattingEnabled = true;
+            this.cmbEliminarMarca.Location = new System.Drawing.Point(1106, 586);
+            this.cmbEliminarMarca.Name = "cmbEliminarMarca";
+            this.cmbEliminarMarca.Size = new System.Drawing.Size(146, 22);
+            this.cmbEliminarMarca.TabIndex = 4;
+            // 
+            // cmbEliminarCategoria
+            // 
+            this.cmbEliminarCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEliminarCategoria.FormattingEnabled = true;
+            this.cmbEliminarCategoria.Location = new System.Drawing.Point(1106, 663);
+            this.cmbEliminarCategoria.Name = "cmbEliminarCategoria";
+            this.cmbEliminarCategoria.Size = new System.Drawing.Size(146, 22);
+            this.cmbEliminarCategoria.TabIndex = 16;
             // 
             // frmPrincipal
             // 
@@ -161,6 +245,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SlateGray;
             this.ClientSize = new System.Drawing.Size(1264, 721);
+            this.Controls.Add(this.cmbEliminarCategoria);
+            this.Controls.Add(this.cmbEliminarMarca);
+            this.Controls.Add(this.btnEliminarCategoria);
+            this.Controls.Add(this.btnEliminarMarca);
+            this.Controls.Add(this.txtCaracteristica);
+            this.Controls.Add(this.txtMarca);
+            this.Controls.Add(this.btnAñadirCategoría);
+            this.Controls.Add(this.btnAñadirMarca);
             this.Controls.Add(this.btnVerDetalles);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnEliminar);
@@ -180,6 +272,7 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -195,6 +288,14 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnVerDetalles;
+        private System.Windows.Forms.Button btnAñadirMarca;
+        private System.Windows.Forms.Button btnAñadirCategoría;
+        private System.Windows.Forms.TextBox txtMarca;
+        private System.Windows.Forms.TextBox txtCaracteristica;
+        private System.Windows.Forms.Button btnEliminarMarca;
+        private System.Windows.Forms.Button btnEliminarCategoria;
+        private System.Windows.Forms.ComboBox cmbEliminarMarca;
+        private System.Windows.Forms.ComboBox cmbEliminarCategoria;
     }
 }
 
