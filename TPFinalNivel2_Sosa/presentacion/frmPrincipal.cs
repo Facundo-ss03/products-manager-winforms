@@ -192,5 +192,22 @@ namespace presentacion
             }
 
         }
+
+        private void txtMarca_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = esLetra(e.KeyChar);
+        }
+
+        private void txtCategoria_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = esLetra(e.KeyChar);
+        }
+
+        private bool esLetra(char caracter)
+        {
+            if (!char.IsControl(caracter) && !char.IsLetter(caracter) && !char.IsWhiteSpace(caracter))
+                return true;
+            else return false;
+        }
     }
 }
