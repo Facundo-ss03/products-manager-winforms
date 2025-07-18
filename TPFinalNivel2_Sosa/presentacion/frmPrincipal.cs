@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AppController;
 
@@ -122,7 +123,8 @@ namespace presentacion
             try
             {
                 controller.agregarMarca(txtMarca.Text);
-                controller.cargarSelector(cmbEliminarMarca, "MARCA");
+                controller.cargarSelector(cmbEliminarMarca, "MARCAS");
+                txtMarca.Clear();
             }
             catch (Exception ex)
             {
@@ -134,7 +136,9 @@ namespace presentacion
         {
             try
             {
-                controller.agregarCategoria(txtCaracteristica.Text);
+                controller.agregarCategoria(txtCategoria.Text);
+                controller.cargarSelector(cmbEliminarCategoria, "CATEGORIAS");
+                txtCategoria.Clear();
 
             }
             catch (Exception ex)
@@ -147,9 +151,18 @@ namespace presentacion
         {
             try
             {
+                DialogResult respuesta = MessageBox.Show("¿Está seguro de que desea eliminar esta marca? " +
+                                                        "Se eliminarán todos los artículos relacionados a ella.",
+                                                        "Eliminar categoría", MessageBoxButtons.YesNo);
+                
+                if(respuesta == DialogResult.Yes)
+                {
 
-                controller.eliminarMarca(cmbEliminarMarca.Text);
-                dataGridView1.DataSource = controller.actualizarDataGrid();
+                    controller.eliminarMarca(cmbEliminarMarca.Text);
+                    controller.cargarSelector(cmbEliminarMarca, "MARCAS");
+                    dataGridView1.DataSource = controller.actualizarDataGrid();
+                
+                }
 
             }
             catch (Exception ex)
@@ -168,13 +181,14 @@ namespace presentacion
 
                 if(respuesta == DialogResult.Yes)
                 {
-                    controller.eliminarCategoria(txtCaracteristica.Text);
+                    controller.eliminarCategoria(cmbEliminarCategoria.Text);
+                    controller.cargarSelector(cmbEliminarCategoria, "CATEGORIAS");
                     dataGridView1.DataSource = controller.actualizarDataGrid();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Ocurrió un error al agregar la categoría. " + ex.ToString());
+                throw new Exception("Ocurrió un error al eliminar la categoría. " + ex.ToString());
             }
 
         }

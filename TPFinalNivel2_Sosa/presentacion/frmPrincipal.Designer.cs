@@ -42,7 +42,7 @@
             this.btnAñadirMarca = new System.Windows.Forms.Button();
             this.btnAñadirCategoría = new System.Windows.Forms.Button();
             this.txtMarca = new System.Windows.Forms.TextBox();
-            this.txtCaracteristica = new System.Windows.Forms.TextBox();
+            this.txtCategoria = new System.Windows.Forms.TextBox();
             this.btnEliminarMarca = new System.Windows.Forms.Button();
             this.btnEliminarCategoria = new System.Windows.Forms.Button();
             this.cmbEliminarMarca = new System.Windows.Forms.ComboBox();
@@ -192,12 +192,12 @@
             this.txtMarca.Size = new System.Drawing.Size(148, 22);
             this.txtMarca.TabIndex = 4;
             // 
-            // txtCaracteristica
+            // txtCategoria
             // 
-            this.txtCaracteristica.Location = new System.Drawing.Point(952, 663);
-            this.txtCaracteristica.Name = "txtCaracteristica";
-            this.txtCaracteristica.Size = new System.Drawing.Size(148, 22);
-            this.txtCaracteristica.TabIndex = 13;
+            this.txtCategoria.Location = new System.Drawing.Point(952, 663);
+            this.txtCategoria.Name = "txtCategoria";
+            this.txtCategoria.Size = new System.Drawing.Size(148, 22);
+            this.txtCategoria.TabIndex = 13;
             // 
             // btnEliminarMarca
             // 
@@ -249,7 +249,7 @@
             this.Controls.Add(this.cmbEliminarMarca);
             this.Controls.Add(this.btnEliminarCategoria);
             this.Controls.Add(this.btnEliminarMarca);
-            this.Controls.Add(this.txtCaracteristica);
+            this.Controls.Add(this.txtCategoria);
             this.Controls.Add(this.txtMarca);
             this.Controls.Add(this.btnAñadirCategoría);
             this.Controls.Add(this.btnAñadirMarca);
@@ -291,7 +291,7 @@
         private System.Windows.Forms.Button btnAñadirMarca;
         private System.Windows.Forms.Button btnAñadirCategoría;
         private System.Windows.Forms.TextBox txtMarca;
-        private System.Windows.Forms.TextBox txtCaracteristica;
+        private System.Windows.Forms.TextBox txtCategoria;
         private System.Windows.Forms.Button btnEliminarMarca;
         private System.Windows.Forms.Button btnEliminarCategoria;
         private System.Windows.Forms.ComboBox cmbEliminarMarca;

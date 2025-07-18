@@ -226,14 +226,12 @@ namespace AppController
 
         public void cargarImagen(PictureBox box, object seleccion)
         {
-            // Lógica similar a la que ya usás, pero liberando la imagen previa
             if (box.Image != null)
             {
                 box.Image.Dispose();
                 box.Image = null;
             }
 
-            // Cargar imagen nueva y guardarla por si luego hay que liberarla manualmente
             string imagenNotFound = "F:/repositorios/Nivel2Final/resources/imagen-no-encontrada.jpg";
 
             try
@@ -242,7 +240,8 @@ namespace AppController
                     throw new ArgumentException("El objeto no es de tipo Artículo.");
 
                 box.Load(articulo.ImagenUrl);
-                imagenTemporal = box.Image; // Enlazás la imagen temporalmente
+                imagenTemporal = box.Image;
+
             }
             catch
             {
@@ -253,22 +252,57 @@ namespace AppController
 
         public void agregarMarca(string marca)
         {
+            if (marca.Trim().Length == 0)
+                throw new Exception("La marca que se intenta agregar está vacía.");
+
+            bool existeMarca = false;
+
+            foreach (var item in marcas)
+            {
+                if(item.descripcion.Equals(marca)) existeMarca = true;
+            }
+            Console.WriteLine(existeMarca);
+
+            if (!existeMarca)
+            {
+
             ConsultasMarcas consulta = new ConsultasMarcas();
             consulta.Agregar(marca);
+            marcas = consulta.listarMarcas();
+            }
+            
         }
 
         public void agregarCategoria(string categoria)
         {
-            ConsultasCategorias consulta = new ConsultasCategorias();
-            consulta.Agregar(categoria);
+            if (categoria.Trim().Length == 0)
+                throw new Exception("La categoría que se intenta agregar está vacía.");
+
+            bool existeCategoria = false;
+
+            foreach (var item in categorias)
+            {
+                if (item.descripcion.Equals(categoria)) existeCategoria = true;
+            }
+            Console.WriteLine(existeCategoria);
+
+            if (!existeCategoria)
+            {
+
+                ConsultasCategorias consulta = new ConsultasCategorias();
+                consulta.Agregar(categoria);
+                categorias = consulta.listarCategorias();
+            }
         }
 
         public void eliminarCategoria(string categoria)
         {
-            if(!categorias.Equals("Ninguna"))
+            if(!categoria.Equals("Ninguna"))
             {
                 ConsultasCategorias consulta = new ConsultasCategorias();
                 consulta.Eliminar(categoria);
+
+                categorias = consulta.listarCategorias();
             }
         }
 
@@ -279,6 +313,7 @@ namespace AppController
                 ConsultasMarcas consulta = new ConsultasMarcas();
                 consulta.Eliminar(marca);
 
+                marcas = consulta.listarMarcas();
             }
         }
 
