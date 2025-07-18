@@ -76,6 +76,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InputsAlfabeticos.cs" />
+    <Compile Include="InputsNumericos.cs" />
     <Compile Include="ManejoDeConsultas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -115,53 +115,6 @@ namespace presentacion
 
         }
 
-        private bool comprobarCampos()
-        {
-            bool salida = true;
-
-            if (!controller.comprobarCampoDeCaracteres(txtDescripcion.Text))
-            {
-                salida = false;
-                lblDescripcion.ForeColor = Color.Red;
-            }
-            else
-            {
-                lblDescripcion.ForeColor = Color.Black;
-            }
-
-            if (!controller.comprobarCampoDeCaracteres(txtNombre.Text))
-            {
-                salida = false;
-                lblNombre.ForeColor = Color.Red;
-            }
-            else
-            {
-                lblNombre.ForeColor = Color.Black;
-            }
-
-            if (!controller.comprobarCampoNumerico(txtPrecio.Text))
-            {
-                lblPrecio.ForeColor = Color.Red;
-                salida = false;
-            }
-            else
-            {
-                lblPrecio.ForeColor = Color.Black;
-            }
-
-            if (controller.ContieneSimbolos(txtCodigo.Text))
-            {
-                lblCodigo.ForeColor = Color.Red;
-                salida = false;
-            }
-            else
-            {
-                lblCodigo.ForeColor = Color.Black;
-            }
-
-            return salida;
-        }
-
         private void txtUrlImagen_Leave(object sender, EventArgs e)
         {
             controller.cargarImagen(pictureBox1, txtUrlImagen.Text);
@@ -204,5 +157,40 @@ namespace presentacion
             base.Dispose(disposing);
         }
 
+
+        private void txtCodigo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            e.Handled = InputsNumericos.esCaracterNumerico(e.KeyChar);
+
+        }
+
+        private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            e.Handled = InputsAlfabeticos.esCaracterAlfabetico(e.KeyChar);
+
+        }
+
+        private void txtDescripcion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            e.Handled = InputsAlfabeticos.esCaracterAlfabetico(e.KeyChar);
+
+        }
+
+        private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            e.Handled = InputsNumericos.esCaracterNumerico(e.KeyChar);
+
+        }
+
+        private void txtUrlImagen_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            e.Handled = InputsAlfabeticos.esCaracterAlfabetico(e.KeyChar);
+
+        }
     }
 }
