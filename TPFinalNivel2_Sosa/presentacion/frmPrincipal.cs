@@ -34,7 +34,6 @@ namespace presentacion
             frmArtículos agregar = new frmArtículos();
 
             agregar.ShowDialog();
-            agregar.Limpiar(true);
             dataGridView1.DataSource = controller.actualizarDataGrid();
         }
 
@@ -45,7 +44,6 @@ namespace presentacion
                 frmArtículos modificar = new frmArtículos(/*dataGridView1, */dataGridView1.CurrentRow.DataBoundItem);
 
                 modificar.ShowDialog();
-                modificar.Limpiar(true);
                 dataGridView1.DataSource = controller.actualizarDataGrid();
                 GC.Collect();
             }
@@ -53,7 +51,6 @@ namespace presentacion
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            ToolTip tool = new ToolTip();
             try
             {
                 if (dataGridView1.Rows.Count != 0)
@@ -72,7 +69,6 @@ namespace presentacion
                         }
 
                         dataGridView1.DataSource = controller.actualizarDataGrid();
-                        tool.RemoveAll();
                     }
                 }
             }
@@ -82,7 +78,6 @@ namespace presentacion
             }
             finally
             {
-                tool.Dispose();
                 controller.Dispose();
             }
         }
