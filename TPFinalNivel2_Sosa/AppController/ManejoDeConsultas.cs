@@ -29,6 +29,39 @@ namespace AppController
         private DataTable columnas;
         private Image imagenTemporal;
 
+        public ArticuloDTO ObtenerArticuloDTO(Object articulo)
+        {
+            if (!EsUnArticulo(articulo))
+                throw new Exception("El objeto pasado por parámetro no es de tipo Articulo.");
+
+            Articulo articuloSeleccionado = (Articulo) articulo;
+
+            return new ArticuloDTO(articuloSeleccionado.id,
+                                   articuloSeleccionado.codigo,
+                                   articuloSeleccionado.nombre,
+                                   articuloSeleccionado.descripcion,
+                                   articuloSeleccionado.marca,
+                                   articuloSeleccionado.categoria,
+                                   articuloSeleccionado.ImagenUrl,
+                                   articuloSeleccionado.precio
+                                  );
+        }
+
+        private bool EsUnArticulo(Object articulo)
+        {
+            if (articulo is Articulo)
+                return true;
+            else return false;
+        }
+
+        public String ObtenerDetallesDeArticulo(Object articulo)
+        {
+            if (!(EsUnArticulo(articulo)))
+                throw new Exception("El objeto pasado por parámetro no es de tipo Articulo.");
+
+            return ((Articulo)articulo).ToString();
+
+        }
 
         public List<Articulo> filtrar(string criterio, string busqueda)
         {
@@ -104,7 +137,6 @@ namespace AppController
         {
             try
             {
-                Console.WriteLine(URLImagen.Length);
                 ConsultasArticulos consulta = new ConsultasArticulos();
                 return consulta.agregarArticulo(codigo, nombre, descripcion, idMarca, idCategoria, URLImagen, precio);
             }
@@ -123,7 +155,7 @@ namespace AppController
 
         public void eliminar(Object seleccion)
         {
-            if (!(seleccion is Articulo) && !(seleccion is DataGridViewSelectedRowCollection))
+            if (!(EsUnArticulo(seleccion)) && !(seleccion is DataGridViewSelectedRowCollection))
                 throw new ArgumentException("El objeto no es de tipo Artículo ni una colección.");
 
             if(seleccion is Articulo)
@@ -151,72 +183,21 @@ namespace AppController
 
         }
 
-        public bool comprobarCampoNumerico(string cadena)
-        {
-            bool cadenaEsVálida = cadena.Length > 0 && !cadena.Any(char.IsLetter);
-            Console.WriteLine(cadenaEsVálida);
-            return cadenaEsVálida;
-        }
-
-        public bool comprobarCampoDeCaracteres(string cadena)
-        {
-            bool salida = true;
-            try
-            {
-                if (cadena != "")
-                {
-                    foreach (char item in cadena)
-                    {
-                        if (char.IsNumber(item) && item != ' ')
-                        {
-                            salida = false;
-                        }
-                    }
-
-                    if (ContieneSimbolos(cadena))
-                    {
-                        salida = false;
-                    }
-                }
-
-                return salida;
-            }
-            catch(Exception)
-            {
-                return false; 
-            }
-        }
-
-        public bool ContieneSimbolos(string cadena)
-        {
-            bool salida = false;
-            foreach (char item in cadena)
-            {
-                if (char.IsSymbol(item))
-                {
-                    salida = true;
-                }
-            }
-            return salida;
-        }
-
         public void cargarImagen(PictureBox box, string url)
         {
-            // Lógica similar a la que ya usás, pero liberando la imagen previa
             if (box.Image != null)
             {
                 box.Image.Dispose();
                 box.Image = null;
             }
 
-            // Cargar imagen nueva y guardarla por si luego hay que liberarla manualmente
             string imagenNotFound = "F:/repositorios/Nivel2Final/resources/imagen-no-encontrada.jpg";
 
             try
             {
 
                 box.Load(url);
-                imagenTemporal = box.Image; // Enlazás la imagen temporalmente
+                imagenTemporal = box.Image; 
             }
             catch
             {
@@ -237,8 +218,10 @@ namespace AppController
 
             try
             {
-                if (!(seleccion is Articulo articulo))
+                if (!(EsUnArticulo(seleccion)))
                     throw new ArgumentException("El objeto no es de tipo Artículo.");
+
+                Articulo articulo = (Articulo)seleccion;
 
                 box.Load(articulo.ImagenUrl);
                 imagenTemporal = box.Image;
@@ -249,6 +232,12 @@ namespace AppController
                 box.Load(imagenNotFound);
                 imagenTemporal = box.Image;
             }
+
+        }
+
+        public void desecharImagen(PictureBox box)
+        {
+            box.Image.Dispose();
         }
 
         public void agregarMarca(string marca)
@@ -284,7 +273,6 @@ namespace AppController
             {
                 if (item.descripcion.Equals(categoria)) existeCategoria = true;
             }
-            Console.WriteLine(existeCategoria);
 
             if (!existeCategoria)
             {

@@ -11,6 +11,7 @@ namespace presentacion
         public frmArtículos()
         {
             InitializeComponent();
+
             this.Text = "Crear Artículo";
             this.Icon = new System.Drawing.Icon("F:/repositorios/Nivel2Final/resources/nuevoArticulo.ico");
 
@@ -21,9 +22,9 @@ namespace presentacion
             articulo = null;
         }
 
-        public frmArtículos(Object seleccionado)
+        public frmArtículos(Object articuloSeleccionado)
         {
-            if (!(seleccionado is Articulo))
+            if (!(articuloSeleccionado is Articulo))
                 throw new ArgumentException("El objeto no es de tipo Articulo.");
 
             InitializeComponent();
@@ -35,50 +36,76 @@ namespace presentacion
             controller.cargarSelector(cmbMarcas, "MARCAS");
             controller.cargarSelector(cmbCategorias, "CATEGORIAS");
 
-            this.articulo = (Articulo)seleccionado;
+            this.articulo = controller.ObtenerArticuloDTO(articuloSeleccionado);
         }
 
-        private Articulo articulo;
+        private ArticuloDTO articulo;
         private ManejoDeConsultas controller;
 
-        private void btnAceptar_Click(object sender, EventArgs e){
+        private void btnAceptar_Click(object sender, EventArgs e) {
 
-            DialogResult respuesta = DialogResult.Yes;
+            DialogResult respuesta;
             bool operacionExitosa = false;
-                try {
 
-                    string codigo = txtCodigo.Text;
-                    string nombre = txtNombre.Text;
-                    string descripcion = txtDescripcion.Text;
-                    string url = txtUrlImagen.Text;
+            try {
 
-                    Categoria categoria = (Categoria)cmbCategorias.SelectedItem;
-                    Marca marca = (Marca)cmbMarcas.SelectedItem;
-                    
-                    double precio = Double.Parse(txtPrecio.Text);
+                operacionExitosa = AgregarOModificarArticulo();
 
-                    if (articulo == null) {
+            }
+            catch (Exception ex) {
 
-                        operacionExitosa = controller.agregar(txtCodigo.Text, txtNombre.Text, txtDescripcion.Text, marca.id, categoria.id, txtUrlImagen.Text, precio);
-                        
-                    } else {
+                Console.WriteLine(ex.ToString());
 
-                        operacionExitosa = controller.modificar(articulo.id, txtCodigo.Text, txtNombre.Text, txtDescripcion.Text,
-                                                    marca.id, categoria.id, txtUrlImagen.Text, precio);
-                        
-                        }
-                    }
-                catch (Exception ex){
+                respuesta = MessageBox.Show("Los datos ingresados son inválidos. ¿Desea seguir editando?", "¡Advertencia!",
+                                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                    Console.WriteLine(ex.ToString());
-
-                    respuesta = MessageBox.Show("Los datos ingresados son inválidos. ¿Desea seguir editando?", "¡Advertencia!",
-                                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                    if (respuesta.Equals(DialogResult.No))
-                        Close();
-                }
+                if (respuesta.Equals(DialogResult.No))
+                    Close();
+            }
             if (operacionExitosa) Close();
+        }
+
+        private bool AgregarOModificarArticulo()
+        {
+            Categoria categoria = (Categoria)cmbCategorias.SelectedItem;
+            Marca marca = (Marca)cmbMarcas.SelectedItem;
+            double precio = ConvertirPrecioADouble(txtPrecio.Text);
+
+            bool resultado;
+
+            if (articulo == null)
+                resultado = AgregarArticulo(categoria, marca, precio);
+            else resultado = ModificarArticulo(articulo.categoria, articulo.marca, precio);
+
+            return resultado;
+        }
+
+        private bool AgregarArticulo(Categoria categoria, Marca marca, double precio)
+        {
+            return controller.agregar(txtCodigo.Text,
+                                      txtNombre.Text,
+                                      txtDescripcion.Text,
+                                      marca.id,
+                                      categoria.id,
+                                      txtUrlImagen.Text,
+                                      precio);
+        }
+
+        private bool ModificarArticulo(Categoria categoria, Marca marca, double precio)
+        {
+            return controller.modificar(articulo.id,
+                                        txtCodigo.Text,
+                                        txtNombre.Text,
+                                        txtDescripcion.Text,
+                                        marca.id,
+                                        categoria.id,
+                                        txtUrlImagen.Text,
+                                        precio);
+        }
+
+        private double ConvertirPrecioADouble(string precio)
+        {
+            return Double.Parse(precio);
         }
 
         private void frmArtículos_Load(object sender, EventArgs e)
@@ -97,7 +124,7 @@ namespace presentacion
 
                 cmbMarcas.Text = articulo.marca.descripcion;
                 cmbCategorias.Text = articulo.categoria.descripcion;
-                controller.cargarImagen(pictureBox1, articulo);
+                controller.cargarImagen(pictureBox1, articulo.ImagenUrl);
             } else
             {
                 controller.cargarImagen(pictureBox1, null);
@@ -118,7 +145,6 @@ namespace presentacion
             txtDescripcion.Clear();
             txtPrecio.Clear();
             txtUrlImagen.Clear();
-
         }
 
         private void txtUrlImagen_Leave(object sender, EventArgs e)
@@ -128,42 +154,10 @@ namespace presentacion
 
         private void frmArtículos_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GC.Collect();
+            controller.desecharImagen(pictureBox1);
+            Dispose();
         }
         
-        public void Limpiar(bool disposing)
-        {
-            if (disposing)
-            {
-                // Liberar recursos manuales
-                if (articulo != null)
-                {
-                    if(articulo is IDisposable disposableObject)
-                        disposableObject.Dispose();
-
-                    articulo = null;
-                }
-
-                if (controller != null)
-                {
-                    if (controller is IDisposable disposableController)
-                        disposableController.Dispose();
-
-                    controller = null;
-                }
-
-                // Liberar imagen si es necesario
-                if (pictureBox1.Image != null)
-                {
-                    pictureBox1.Image.Dispose();
-                    pictureBox1.Image = null;
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
-
         private void txtCodigo_KeyPress(object sender, KeyPressEventArgs e)
         {
 

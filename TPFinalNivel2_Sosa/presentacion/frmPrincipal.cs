@@ -33,6 +33,7 @@ namespace presentacion
         {
             abrirFormulario(new frmArtículos());
             actualizarGrilla();
+            
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -41,7 +42,6 @@ namespace presentacion
             {
                 abrirFormulario(new frmArtículos(dataGridView1.CurrentRow.DataBoundItem));
                 actualizarGrilla();
-                GC.Collect();
             }
         }
 
@@ -148,11 +148,9 @@ namespace presentacion
                 
                 if(respuesta == DialogResult.Yes)
                 {
-
                     controller.eliminarMarca(cmbEliminarMarca.Text);
                     controller.cargarSelector(cmbEliminarMarca, "MARCAS");
                     actualizarGrilla();
-
                 }
 
             }

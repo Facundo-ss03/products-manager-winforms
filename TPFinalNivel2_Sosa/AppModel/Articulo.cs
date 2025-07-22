@@ -84,13 +84,21 @@ namespace AppModel
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("Codigo: " + codigo);
-            sb.Append(" Nombre: " + nombre);
-            sb.Append(" Descripción: " + descripcion);
-            sb.Append(" Marca: " + marca.ToString());
-            sb.Append(" Categoria: " + categoria.ToString());
-            sb.Append(" URL de imagen: " + ImagenUrl);
-            sb.Append(" Precio: " + precio.ToString());
+            sb.AppendLine("Codigo: " + codigo);
+            sb.AppendLine();
+            sb.AppendLine("Nombre: " + nombre);
+            sb.AppendLine();
+            sb.AppendLine("Descripción: " + descripcion);
+            sb.AppendLine();
+            sb.AppendLine("Precio: " + precio.ToString());
+            sb.AppendLine();
+            sb.AppendLine("Marca: " + marca.ToString());
+            sb.AppendLine();
+            sb.AppendLine("Categoria: " + categoria.ToString());
+            sb.AppendLine();
+            sb.AppendLine("URL de imagen: " + ImagenUrl);
+            sb.AppendLine();
+
             return sb.ToString();
         }
 

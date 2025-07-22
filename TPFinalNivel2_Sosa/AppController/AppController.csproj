@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArticuloDTO.cs" />
     <Compile Include="InputsAlfabeticos.cs" />
     <Compile Include="InputsNumericos.cs" />
     <Compile Include="ManejoDeConsultas.cs" />
