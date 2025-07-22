@@ -10,6 +10,8 @@ namespace presentacion
         public frmPrincipal()
         {
             InitializeComponent();
+            this.Text = "Principal";
+            this.Icon = new System.Drawing.Icon("F:/repositorios/Nivel2Final/resources/icono-principal.ico");
 
             cmbCriterioDeBusqueda.Items.Add("Todos");
 

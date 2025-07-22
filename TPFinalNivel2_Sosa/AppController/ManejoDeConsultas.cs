@@ -104,6 +104,7 @@ namespace AppController
         {
             try
             {
+                Console.WriteLine(URLImagen.Length);
                 ConsultasArticulos consulta = new ConsultasArticulos();
                 return consulta.agregarArticulo(codigo, nombre, descripcion, idMarca, idCategoria, URLImagen, precio);
             }
@@ -261,14 +262,13 @@ namespace AppController
             {
                 if(item.descripcion.Equals(marca)) existeMarca = true;
             }
-            Console.WriteLine(existeMarca);
 
             if (!existeMarca)
             {
 
-            ConsultasMarcas consulta = new ConsultasMarcas();
-            consulta.Agregar(marca);
-            marcas = consulta.listarMarcas();
+                ConsultasMarcas consulta = new ConsultasMarcas();
+                consulta.Agregar(marca);
+                marcas = consulta.listarMarcas();
             }
             
         }
@@ -316,8 +316,6 @@ namespace AppController
                 marcas = consulta.listarMarcas();
             }
         }
-
-
 
         public void Dispose()
         {

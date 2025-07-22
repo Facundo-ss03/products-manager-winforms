@@ -10,6 +10,8 @@ namespace presentacion
         public frmDetalles(Object seleccion)
         {
             InitializeComponent();
+            this.Text = "Detalles";
+            this.Icon = new System.Drawing.Icon("F:/repositorios/Nivel2Final/resources/detalles.ico");
 
             this.controller = new ManejoDeConsultas();
 

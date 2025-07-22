@@ -92,7 +92,7 @@ namespace AppServices
             }
             catch (Exception ex)
             {
-                throw new Exception("Ocurrió un error al agregar un artículo. " + ex.ToString());
+                throw new Exception("Ocurrió un error al agregar un artículo a nivel DB. " + ex.ToString());
             }
             finally
             {

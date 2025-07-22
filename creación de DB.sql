@@ -44,7 +44,7 @@ Nombre varchar(30) not null,
 Descripcion varchar(30) not null,
 IdMarca int not null,
 IdCategoria int not null,
-ImagenUrl varchar(100) not null,
+ImagenUrl text not null,
 Precio money not null
 )
 

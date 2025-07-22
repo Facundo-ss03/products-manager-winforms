@@ -11,6 +11,8 @@ namespace presentacion
         public frmArtículos()
         {
             InitializeComponent();
+            this.Text = "Crear Artículo";
+            this.Icon = new System.Drawing.Icon("F:/repositorios/Nivel2Final/resources/nuevoArticulo.ico");
 
             this.controller = new ManejoDeConsultas();
 
@@ -25,6 +27,8 @@ namespace presentacion
                 throw new ArgumentException("El objeto no es de tipo Articulo.");
 
             InitializeComponent();
+            this.Text = "Modificar Artículo";
+            this.Icon = new System.Drawing.Icon("F:/repositorios/Nivel2Final/resources/nuevoArticulo.ico");
 
             this.controller = new ManejoDeConsultas();
 
@@ -50,7 +54,7 @@ namespace presentacion
 
                     Categoria categoria = (Categoria)cmbCategorias.SelectedItem;
                     Marca marca = (Marca)cmbMarcas.SelectedItem;
-
+                    
                     double precio = Double.Parse(txtPrecio.Text);
 
                     if (articulo == null) {
@@ -94,9 +98,11 @@ namespace presentacion
                 cmbMarcas.Text = articulo.marca.descripcion;
                 cmbCategorias.Text = articulo.categoria.descripcion;
                 controller.cargarImagen(pictureBox1, articulo);
+            } else
+            {
+                controller.cargarImagen(pictureBox1, null);
             }
 
-            controller.cargarImagen(pictureBox1, null);
 
         }
 
