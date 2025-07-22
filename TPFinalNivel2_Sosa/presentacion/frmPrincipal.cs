@@ -31,20 +31,16 @@ namespace presentacion
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            frmArtículos agregar = new frmArtículos();
-
-            agregar.ShowDialog();
-            dataGridView1.DataSource = controller.actualizarDataGrid();
+            abrirFormulario(new frmArtículos());
+            actualizarGrilla();
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
             if(dataGridView1.Rows.Count != 0)
             {
-                frmArtículos modificar = new frmArtículos(/*dataGridView1, */dataGridView1.CurrentRow.DataBoundItem);
-
-                modificar.ShowDialog();
-                dataGridView1.DataSource = controller.actualizarDataGrid();
+                abrirFormulario(new frmArtículos(dataGridView1.CurrentRow.DataBoundItem));
+                actualizarGrilla();
                 GC.Collect();
             }
         }
@@ -68,7 +64,7 @@ namespace presentacion
                             controller.eliminar(dataGridView1.SelectedRows);
                         }
 
-                        dataGridView1.DataSource = controller.actualizarDataGrid();
+                        actualizarGrilla();
                     }
                 }
             }
@@ -84,7 +80,7 @@ namespace presentacion
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = controller.actualizarDataGrid();
+            actualizarGrilla();
             dataGridView1.Columns["ImagenUrl"].Visible = false;
 
             if(dataGridView1.Rows.Count > 0)
@@ -102,11 +98,9 @@ namespace presentacion
         {
             try
             {
-                using (var detalles = new frmDetalles(dataGridView1.CurrentRow.DataBoundItem))
-                {
-                    detalles.ShowDialog();
-                    detalles.Limpiar(true);
-                }
+
+                abrirFormulario(new frmDetalles(dataGridView1.CurrentRow.DataBoundItem));
+
             }
             catch (Exception ex)
             {
@@ -157,8 +151,8 @@ namespace presentacion
 
                     controller.eliminarMarca(cmbEliminarMarca.Text);
                     controller.cargarSelector(cmbEliminarMarca, "MARCAS");
-                    dataGridView1.DataSource = controller.actualizarDataGrid();
-                
+                    actualizarGrilla();
+
                 }
 
             }
@@ -180,7 +174,7 @@ namespace presentacion
                 {
                     controller.eliminarCategoria(cmbEliminarCategoria.Text);
                     controller.cargarSelector(cmbEliminarCategoria, "CATEGORIAS");
-                    dataGridView1.DataSource = controller.actualizarDataGrid();
+                    actualizarGrilla();
                 }
             }
             catch (Exception ex)
@@ -200,5 +194,17 @@ namespace presentacion
             e.Handled = InputsAlfabeticos.esCaracterAlfabetico(e.KeyChar);
         }
 
+        private void abrirFormulario(Form formulario)
+        {
+            using(var form = formulario)
+            {
+                formulario.ShowDialog();
+            }
+        }
+
+        private void actualizarGrilla()
+        { 
+            dataGridView1.DataSource = controller.actualizarDataGrid();
+        }
     }
 }
