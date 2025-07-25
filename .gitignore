@@ -3,14 +3,6 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-bin/
-obj/
-
-TPFinalNivel2_Sosa/AppModel/obj/Debug/AppModel.csproj.AssemblyReference.cache
-        TPFinalNivel2_Sosa/AppServices/obj/Debug/AppServices.csproj.AssemblyReference.cache
-        TPFinalNivel2_Sosa/presentacion/obj/Debug/presentacion.csproj.AssemblyReference.cache
-
-
 # User-specific files
 *.rsuser
 *.suo
@@ -20,6 +12,12 @@ TPFinalNivel2_Sosa/AppModel/obj/Debug/AppModel.csproj.AssemblyReference.cache
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+
+# Ignorar carpetas temporales de compilación
+bin/
+obj/
+*.AssemblyReference.cache
+
 
 # Mono auto generated files
 mono_crash.*

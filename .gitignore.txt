@@ -1,0 +1,3 @@
+*.AssemblyReference.cache
+obj/
+bin/
