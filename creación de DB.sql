@@ -39,12 +39,12 @@ if OBJECT_ID('CATEGORIAS', 'U') is not null drop table CATEGORIAS;
 create table ARTICULOS
 (
 Id int identity(1,1),
-Codigo varchar(30) not null,
-Nombre varchar(30) not null,
-Descripcion varchar(30) not null,
+Codigo varchar(20) not null,
+Nombre varchar(40) not null,
+Descripcion varchar(300) not null,
 IdMarca int not null,
 IdCategoria int not null,
-ImagenUrl text not null,
+ImagenUrl varchar(MAX) not null,
 Precio money not null
 )
 
@@ -64,10 +64,10 @@ go
 -- genera un articulo para probar la app --
 
 INSERT INTO CATEGORIAS(Descripcion)
-VALUES('Carnes congeladas')
+VALUES('Ninguna')
 
 INSERT INTO MARCAS(Descripcion)
-VALUES('Granja Del Sol')
+VALUES('Ninguna')
 
 INSERT INTO ARTICULOS(Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio)
 VALUES('1234', 'Pollo', 'Pollo congelado', 1, 1, '@ImagenUrl', 1.000)
