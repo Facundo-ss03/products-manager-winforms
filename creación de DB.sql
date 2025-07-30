@@ -7,19 +7,19 @@ begin
 	ON
 	primary
 		(name = catalogoPrimary,
-		filename = 'F:\repositorios\Nivel2Final\database\catalogoPrimary.mdf',		-- se puede cambiar por una carpeta a elección
+		filename = 'C:\Dev\Projects\CS.NET\WinForms\products-manager-winforms\TPFinalNivel2_Sosa\Databases\catalogoPrimary.mdf',		-- se puede cambiar por una carpeta a elección
 		size = 50MB,
 		maxsize = 200MB,
 		filegrowth = 20),
 	filegroup catalogoIFG
 		(name = catalogoData,
-		filename = 'F:\repositorios\Nivel2Final\database\catalogoData.ndf',
+		filename = 'C:\Dev\Projects\CS.NET\WinForms\products-manager-winforms\TPFinalNivel2_Sosa\Databases\catalogoData.ndf',
 		size = 200MB,
 		maxsize = 800,
 		filegrowth = 100)
 	log on
 		(name = catalogoLog,
-		filename = 'F:\repositorios\Nivel2Final\database\catalogoLog.ldf',
+		filename = 'C:\Dev\Projects\CS.NET\WinForms\products-manager-winforms\TPFinalNivel2_Sosa\Databases\catalogoLog.ldf',
 		size = 300MB,
 		maxsize = 800,
 		filegrowth = 100);
